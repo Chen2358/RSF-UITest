@@ -1,0 +1,222 @@
+*** Settings ***
+Resource          l2_components.txt
+
+*** Keywords ***
+用户登录后台
+    [Arguments]    ${url}    ${username}    ${password}
+    登录后台    ${url}    ${username}    ${password}
+
+开始询价
+    [Arguments]    ${name}    ${danName}
+    转到售前工程师
+    转到代发询价页面
+    代发询价单信息输入    ${name}    ${danName}
+
+销售助理
+    [Arguments]    ${name}
+    Comment    转到销售助理
+    销售助理处理    ${name}
+
+内审核价
+    [Arguments]    ${name}
+    转到内审核价
+    内审核价处理    ${name}
+
+外发询价
+    [Arguments]    ${name}
+    转到外发询价
+    外发询价处理    ${name}
+
+售前确认报价
+    [Arguments]    ${name}
+    转到售前工程师_待报价
+    售前工程师确认询价    ${name}
+
+售前代下单
+    [Arguments]    ${name}
+    转到售前_已报价
+    代下单    ${name}    3
+
+售前确认代下订单
+    [Arguments]    ${name}
+    售前处理订单    ${name}
+
+工艺审图
+    [Arguments]    ${name}
+    转到工艺审图
+    工艺审图处理    ${name}
+
+采购处理
+    [Arguments]    ${name}    ${supplier}
+    转到采购
+    采购处理订单    ${name}    ${supplier}
+
+到货处理
+    [Arguments]    ${name}    ${deliveryNo}
+    转到到货
+    仓库到货    ${name}    ${deliveryNo}
+
+质检申请返修
+    [Arguments]    ${name}
+    转到质检
+    申请返修    ${name}
+
+返修处理
+    [Arguments]    ${name}
+    转到订单返修售后处理
+    售后处理返修单    ${name}
+
+采购质检合格
+    [Arguments]    ${name}
+    转到质检
+    质检处理    ${name}
+
+发货处理
+    [Arguments]    ${name}    ${expressNo}
+    转到发货
+    仓库发货    ${name}    ${expressNo}
+
+询价_Teardown
+    关闭所有窗口
+
+订单_Teardown
+    [Arguments]    ${name}
+    转到售前_全部
+    删除询价单    ${name}
+    关闭所有窗口
+
+登录客户端
+    [Arguments]    ${url}    ${username}    ${password}
+    登录客户工作台    ${url}    ${username}    ${password}
+
+客户开始询价
+    [Arguments]    ${name}
+    客户询价    ${name}
+
+售前确认客户询价
+    [Arguments]    ${name}
+    转到售前工程师
+    确认客户询价    ${name}
+
+客户开始下单
+    [Arguments]    ${name}
+    客户下单    ${name}
+
+售前确认客户订单
+    [Arguments]    ${name}
+    转到售前确认
+    售前处理客户订单    ${name}
+
+工艺审图处理客户订单
+    [Arguments]    ${name}
+    转到工艺审图
+    审图处理客户下单    ${name}
+
+采购处理客户订单
+    [Arguments]    ${name}    ${supplier}    ${remark}
+    转到采购
+    采购处理客户下单    ${name}    ${supplier}    ${remark}
+
+跟单处理客户订单
+    [Arguments]    ${inName}
+    转到跟单
+    跟单接受客户订单    ${inName}
+
+到货处理客户订单
+    [Arguments]    ${name}    ${deliveryNo}
+    转到到货
+    仓库到货客户订单    ${name}    ${deliveryNo}
+
+采购质检合格客户订单
+    [Arguments]    ${name}
+    转到质检
+    质检处理客户订单    ${name}
+
+发货处理客户订单
+    [Arguments]    ${name}    ${expressNo}
+    转到发货
+    仓库发货客户订单    ${name}    ${expressNo}
+
+财务确认收款
+    [Arguments]    ${name}    ${serialNumber}
+    转到确认收款
+    确认收款    ${name}    ${serialNumber}
+
+财务代下单确认开票
+    [Arguments]    ${inName}    ${invoiceNumber}    ${invoiceAmount}
+    代下单转到确认开票
+    代下单确认开票    ${inName}    ${invoiceNumber}    ${invoiceAmount}
+
+财务客户下单确认开票
+    [Arguments]    ${inName}    ${invoiceNumber}    ${invoiceAmount}
+    转到确认开票
+    客户下单确认开票    ${inName}    ${invoiceNumber}    ${invoiceAmount}
+
+客户确认订单
+    [Arguments]    ${name}    ${comment}
+    确认订单    ${name}    ${comment}
+
+客户申请售后
+    [Arguments]    ${name}
+    申请售后    ${name}
+
+订单返修售前处理
+    [Arguments]    ${name}    ${LoseMoney}
+    转到返修售前处理
+    售前处理客户返修单    ${name}    ${LoseMoney}
+
+订单返修售后处理
+    [Arguments]    ${name}
+    转到返修售后处理
+    售后处理客户返修单    ${name}
+
+订单退款
+    [Arguments]    ${name}
+    转到退款售前申请
+    退款售前处理    ${name}
+    转到退款售前主管审核
+    退款主管审核    ${name}
+
+财务退款
+    [Arguments]    ${name}    ${serialNumber}
+    [Tags]
+    转到财务退款
+    退款处理    ${name}    ${serialNumber}
+
+销售助理处理客户询价单
+    [Arguments]    ${name}
+    转到销售助理-处理客户询价单
+    销售助理处理    ${name}
+
+客户取消订单
+    [Arguments]    ${name}    ${comment}
+    取消订单    ${name}    ${comment}
+
+售前审核客户取消订单
+    [Arguments]    ${name}
+    转到订单取消售前审核
+    售前审核客户取消    ${name}
+
+采购处理客户取消订单
+    [Arguments]    ${name}
+    转到订单取消采购处理
+    采购处理客户取消    ${name}
+
+删除客户订单
+    [Arguments]    ${name}
+    转到售前确认
+    售前删除订单    ${name}
+
+登录供应商平台
+    [Arguments]    ${url}    ${username}    ${password}
+    登录供应商工作台    ${url}    ${username}    ${password}
+
+供应商处理订单
+    [Arguments]    ${name}    ${expreeNo}
+    供应商平台处理订单    ${name}    ${expreeNo}
+
+客户激光切割
+    激光切割下单
+
+客户3D打印
+    3D打印下单

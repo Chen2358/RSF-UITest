@@ -1,0 +1,181 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+Library           BuiltIn
+
+*** Keywords ***
+进入客户工作台询价列表
+    Click Element    css=body > div > aside > div > nav > ul > li:nth-child(1) > ul > li:nth-child(4) > a > span
+    sleep    3
+
+搜索客户工作台询价单
+    [Arguments]    ${name}
+    Input Text    css=#name    ${name}
+    sleep    2
+    #点击搜索
+    Click Element    xpath=/html/body/div[1]/section/div/div/div/div[3]/div[1]/div/span
+    sleep    3
+
+点击立即下单
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div > div.table-responsive.table-data > table > tbody.no-border.table-list.clearfix.ng-scope > tr.table-content > td.btn-list > button.ng-binding.btn-sm-orange
+    sleep    4
+
+判断地址修改按钮
+    Element should Be Visible    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid.orderDetail > div:nth-child(1) > div:nth-child(3) > div.panel-wrapper.form-horizontal > div > div > div.col-lg-4.col-md-6.mb.ng-scope > div > div > div > span.pull-right > span:nth-child(1) > em
+    sleep    3
+
+判断是否有地址
+    [Arguments]    ${name}    ${phone}    ${detailAddress}
+    ${status}    ${value}=    Run Keyword And Ignore Error    判断地址修改按钮
+    Run Keyword If    '${status}'== 'PASS'    客户下单_修改收货地址    ${name}    ${phone}     ${detailAddress}
+    ...    ELSE    客户下单_添加收货地址    CJTest111    15626532789    固戍泰华梧桐岛9B
+
+客户下单_添加收货地址
+    [Arguments]    ${name}    ${phone}    ${detailAddress}    # 姓名|电话|详细地址
+    Click Element    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid.orderDetail > div:nth-child(1) > div:nth-child(3) > div.panel-heading.mb > div > a
+    sleep    3
+    #收货人
+    Clear Element Text    css=#allAddress > div:nth-child(1) > div > input
+    sleep    3
+    input Text    css=#allAddress > div:nth-child(1) > div > input    ${name}
+    sleep    3
+    #联系电话
+    Clear Element Text    css=#allAddress > div:nth-child(2) > div > input
+    sleep    3
+    input Text    css=#allAddress > div:nth-child(2) > div > input    ${phone}
+    sleep    3
+    #地区:广东深圳宝安
+    Click Element    css=#allAddress > div:nth-child(3) > div > input
+    sleep    3
+    Click Element    css=#allAddress > div:nth-child(3) > div > div > div > ul > li > div:nth-child(1) > div > span:nth-child(6)
+    sleep    3
+    Click Element    css=#allAddress > div:nth-child(3) > div > div > div > ul > li.ng-scope > span:nth-child(13)
+    sleep    3
+    Click Element    css=#allAddress > div:nth-child(3) > div > div > div > ul > li:nth-child(3) > span:nth-child(4)
+    sleep    3
+    #详细地址
+    Clear Element Text    css=#allAddress > div:nth-child(4) > div > input
+    sleep    3
+    input Text    css=#allAddress > div:nth-child(4) > div > input    ${detailAddress}
+    sleep    3
+    #设为默认
+    Click Element    css=#allAddress > div:nth-child(6) > div > label > span
+    sleep    3
+    #保存
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.ui-dialog-content.text-center.mt.clearfix > button:nth-child(3)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+客户下单_修改收货地址
+    [Arguments]    ${name}    ${phone}    ${detailAddress}    # 姓名|电话|详细地址
+    Click Element    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid.orderDetail > div:nth-child(1) > div:nth-child(3) > div.panel-wrapper.form-horizontal > div > div > div.col-lg-4.col-md-6.mb.ng-scope > div > div > div > span.pull-right > span:nth-child(1) > em
+    sleep    3
+    #收货人
+    Clear Element Text    css=#allAddress > div:nth-child(1) > div > input
+    sleep    3
+    input Text    css=#allAddress > div:nth-child(1) > div > input    ${name}
+    sleep    3
+    #联系电话
+    Clear Element Text    css=#allAddress > div:nth-child(2) > div > input
+    sleep    3
+    input Text    css=#allAddress > div:nth-child(2) > div > input    ${phone}
+    sleep    3
+    #详细地址
+    Clear Element Text    css=#allAddress > div:nth-child(4) > div > input
+    sleep    3
+    input Text    css=#allAddress > div:nth-child(4) > div > input    ${detailAddress}
+    sleep    3
+    #保存
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.ui-dialog-content.text-center.mt.clearfix > button:nth-child(3)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+判断发票修改按钮
+    Element should Be Visible    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid.orderDetail > div:nth-child(1) > div:nth-child(4) > div.panel-wrapper.form-horizontal > div > div > div.col-md-12.mb.text-nowrap.ng-scope.selectInv > span > span:nth-child(2) > em
+    sleep    3
+
+判断是否有发票
+    [Arguments]    ${header}    ${taxpayer}
+    ${status}    ${value}=    Run Keyword And Ignore Error    判断发票修改按钮
+    Run Keyword If    '${status}'== 'PASS'    客户下单_修改发票信息    ${header}    ${taxpayer}
+    ...    ELSE    客户下单_添加发票信息    深圳CJTest有限公司test    4561324132123112
+
+客户下单_添加发票信息
+    [Arguments]    ${header}    ${taxpayer}    # 抬头|识别码
+    Click Element    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid.orderDetail > div:nth-child(1) > div:nth-child(4) > div.panel-heading.mb > div > a
+    sleep    3
+    #发票抬头
+    Clear Element Text    css=#generalInvoice > div:nth-child(1) > div > input
+    sleep    3
+    Input Text    css=#generalInvoice > div:nth-child(1) > div > input    ${header}
+    sleep    3
+    #与收货地址一致
+    Click Element    css=#generalInvoice > div:nth-child(3) > div > label > span
+    sleep    3
+    #下一步
+    Click Button    xpath=//div[@class="ui-dialog-content text-centerr mt clearfix"]/button[4]
+    sleep    3
+    #纳税人识别码
+    Clear Element Text    css=#addedInvoice > div:nth-child(6) > div > input
+    sleep    3
+    Input Text    css=#addedInvoice > div:nth-child(6) > div > input    ${taxpayer}
+    sleep    3
+    #设为默认
+    Click Element    css=#allInvoice > div:nth-child(4) > div > label > span
+    sleep    3
+    #保存
+    Click Button    xpath=//div[@class="ui-dialog-content text-centerr mt clearfix"]/button[5]
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+客户下单_修改发票信息
+    [Arguments]    ${header}    ${taxpayer}    # 抬头|识别码
+    Click Element    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid.orderDetail > div:nth-child(1) > div:nth-child(4) > div.panel-wrapper.form-horizontal > div > div > div.col-md-12.mb.text-nowrap.ng-scope.selectInv > span > span:nth-child(2) > em
+    sleep    3
+    #发票抬头
+    Clear Element Text    css=#generalInvoice > div:nth-child(1) > div > input
+    sleep    3
+    Input Text    css=#generalInvoice > div:nth-child(1) > div > input    ${header}
+    sleep    3
+    #与收货地址一致
+    Click Element    css=#generalInvoice > div:nth-child(3) > div > label > span
+    sleep    3
+    #下一步
+    Click Button    xpath=//div[@class="ui-dialog-content text-centerr mt clearfix"]/button[4]
+    sleep    3
+    #纳税人识别码
+    Clear Element Text    css=#addedInvoice > div:nth-child(6) > div > input
+    sleep    3
+    Input Text    css=#addedInvoice > div:nth-child(6) > div > input    ${taxpayer}
+    sleep    3
+    #保存
+    Click Button    xpath=//div[@class="ui-dialog-content text-centerr mt clearfix"]/button[5]
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+选择支付方式
+    Click Element    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid.orderDetail > div:nth-child(1) > div:nth-child(5) > div.panel-wrapper.form-horizontal > div > div > div:nth-child(3) > div > div > div:nth-child(3)
+    sleep    2
+
+客户上传合同
+    [Arguments]    ${fileName}    ${title}
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#uploadForm > div > span > label > span.icon-span-filestyle.icon-folder
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    2
+
+提交订单
+    Click Button    css=body > div > section > div > div > div.container-fluid.orderDetail > div:nth-child(1) > div.col-lg-2.col-lg-offset-5.col-md-4.col-md-offset-4.mb > input
+    sleep    10

@@ -1,0 +1,71 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+采购_采购_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    3
+
+采购_采购_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div:nth-child(1) > form > div:nth-child(2) > div.col-md-8.row > div.col-md-1 > button
+    sleep    5
+
+采购_采购_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0.position-r > div:nth-child(2) > div.table-responsive.col-md-12.ng-scope > table > tbody > tr.ng-scope > td:nth-child(15) > div > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+
+采购_采购_修改供应商
+    [Arguments]    ${suppName}
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div > div.text-center.mb.mt-lg > button:nth-child(5)
+    sleep    5
+    Input Text    css=#scroll-tab > div:nth-child(3) > div > form > input    ${suppName}
+    Comment    Click Button    css=#ngdialog1 > div.ngdialog-content > div.clearfix.row > div:nth-child(5) > form > span > button
+    sleep    3
+    Click Element    css=#scroll-tab > div.clearfix > div.text-center.bb-white.ng-scope > div.clearfix.bg-user > span:nth-child(1) > div > label > span
+    Click Button    css=#scroll-tab > div.text-center.col-md-12 > button.btn.btn-primary.btn-md.mr
+    sleep    5
+
+采购_采购_生成采购单
+    Double Click Element    css=#partList > div.panel-wrapper.in.collapse > div > div:nth-child(2) > div.no-select.float-l > table > tbody > tr.head-font > td.cus-head-height.cus-td-width.success.ng-scope
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div > div.text-center.mb.mt-lg > button:nth-child(6)
+    sleep    2
+
+采购_采购_约定交期&采购备注
+    [Arguments]    ${remark}
+    Click Element    //div[starts-with(@id,'1528')]
+    sleep    3
+    Click Element    css=body > div.datetimepicker.datetimepicker-dropdown-auto.dropdown-menu > div.datetimepicker-days > table > tfoot > tr:nth-child(1) > th
+    sleep    3
+    #采购备注
+    Input Text    css=#purhcaseList > div.panel-wrapper.form-horizontal.in.collapse > div > div.ng-scope > div.row.mt > div > textarea    ${remark}
+    sleep    3
+
+采购_采购_导出采购单
+    #导出采购单(zip)
+    Click Button    css=#purhcaseList > div.panel-wrapper.form-horizontal.in.collapse > div > div.ng-scope > div:nth-child(5) > button:nth-child(2)
+    sleep    3
+    Click Element    xpath=//div[@class="ui-select-match ng-scope"]
+    sleep    3
+    Click Element    xpath=//ul[@class="ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu ng-scope"]
+    sleep    3
+    Click Button    xpath=//div[@class="ngdialog-content"]//div[@class="text-center"]/button[1]
+    sleep    5
+    #导出采购单(xls)
+    Click Button    css=#purhcaseList > div.panel-wrapper.form-horizontal.in.collapse > div > div.ng-scope > div:nth-child(5) > button:nth-child(3)
+    sleep    3
+    Click Element    xpath=//div[@class="ui-select-match ng-scope"]
+    sleep    3
+    Click Element    xpath=//ul[@class="ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu ng-scope"]
+    sleep    3
+    Click Button    xpath=//div[@class="ngdialog-content"]//div[@class="text-center"]/button[1]
+    sleep    5
+
+采购_采购_一键采购
+    Click Button    xpath=//*[@id="purhcaseList"]/div[2]/div/div[2]/button
+    sleep    10
+    log    ----------------------------------------------------
+    Comment    send    {ENTER}
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    10

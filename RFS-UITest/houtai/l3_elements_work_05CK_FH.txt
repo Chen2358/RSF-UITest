@@ -1,0 +1,46 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+仓库_发货_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+
+仓库_发货_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    sleep    10
+
+仓库_发货_处理
+    Click Button    css=#mainContainer > div.row > div > div > div.panel-body.pt0 > div.table-responsive > table > tbody > tr.ng-scope.back-darkBlue > td:nth-child(18) > div:nth-child(1) > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+
+仓库_发货_填写发货信息
+    [Arguments]    ${expressNo}    # 快递单号
+    #选择全部零件
+    Click Element    css=#partList > div.panel-wrapper.in.collapse > div > div > div > table > thead > tr > th > div > label > span
+    sleep    3
+    #添加到发货清单
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div:nth-child(8) > div > button:nth-child(6)
+    sleep    5
+    #快递单号
+    Input Text    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(3) > div:nth-child(4) > input    ${expressNo}
+    sleep    3
+    #实际发货日期
+    Click Element    //div[starts-with(@id,'1528')]
+    sleep    3
+    Click Element    css=body > div.datetimepicker.datetimepicker-dropdown-auto.dropdown-menu > div.datetimepicker-days > table > tfoot > tr:nth-child(1) > th
+    sleep    3
+    #确认发货
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div.col-md-12.mb.text-center > button:nth-child(2)
+    sleep    5
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+
+仓库_发货_结束发货
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div.row.deliver.ng-scope > div > div.col-md-12.mb.text-center > button:nth-child(1)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+    send    {ENTER}
+    sleep    5

@@ -1,0 +1,53 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+采购_质检_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    3
+
+采购_质检_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    sleep    5
+
+采购_质检_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div:nth-child(2) > div.table-responsive.col-md-12.ng-scope > table > tbody > tr.ng-scope > td:nth-child(15) > div > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    10
+
+采购_质检_批量合格
+    Click Element    css=#partList > div.panel-wrapper.in.collapse > div > div:nth-child(1) > div > table > tbody > tr:nth-child(1) > td:nth-child(1) > div > label > span
+    sleep    2
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div > div:nth-child(2) > div > button:nth-child(1)
+    sleep    3
+
+采购_质检_质检完成
+    Click Button    css=body > div > section > div > div:nth-child(7) > div > button:nth-child(1)
+    sleep    3
+    #质检评价
+    Input Text    css=#ngdialog1 > div.ngdialog-content > div.text-center > div > div > textarea    质检评价
+    sleep    3
+    #提交评价并结束质检
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.text-center > button
+    Comment    send    {ENTER}
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+
+采购_质检_申请返修
+    Clear Element Text    css=#partList > div.panel-wrapper.in.collapse > div > div:nth-child(1) > div > table > tbody > tr.ng-scope > td:nth-child(13) > input
+    sleep    2
+    Input Text    css=#partList > div.panel-wrapper.in.collapse > div > div:nth-child(1) > div > table > tbody > tr.ng-scope > td:nth-child(13) > input    2
+    sleep    2
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div > div:nth-child(2) > div > button:nth-child(2)
+    sleep    3
+    #不良类型
+    Click Element    css=#partList > div.panel-wrapper.in.collapse > div > div:nth-child(1) > div > table > tbody > tr.ng-scope.allBadClass > td:nth-child(14) > div > div:nth-child(1)
+    sleep    3
+    Click Element    css=#ui-select-choices-row-1-0 > span > div
+    sleep    3
+    #申请返修
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div > div:nth-child(2) > div > button:nth-child(2)
+    sleep    5
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.row.ui-dialog-content.text-center > button
+    sleep    3

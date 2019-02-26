@@ -1,0 +1,73 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+外发_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    5
+
+外发_查询
+    Comment    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    send    {ENTER}
+    sleep    10
+
+外发_处理
+    Click Button    xpath=/html/body/div[1]/section/div/div/div[2]/div/div/div/div[3]/table/tbody/tr[2]/td[16]/button[1]
+    sleep    5
+
+外发_材料选择
+    Input Text    css=#combineSupplier > div.panel-wrapper.in.collapse > div > div:nth-child(2) > div > div.float-l.width-45-pct > table > tbody > tr.text-center.ng-scope > td:nth-child(3) > div > div > div > input    6061铝合金
+    sleep    5
+
+外发_表面处理
+    Input Text    css=#combineSupplier > div.panel-wrapper.in.collapse > div > div:nth-child(2) > div > div.float-l.width-45-pct > table > tbody > tr.text-center.ng-scope > td:nth-child(6) > div > div > div > input    普通阳极氧化本色（不喷砂）
+    sleep    5
+
+外发_导出零件列表
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > form > div.row.mt-lg.text-center > button.btn.btn-md.btn-primary.mr
+    sleep    5
+
+外发_价格输入
+    Input Text    css=#combineSupplier > div.panel-wrapper.in.collapse > div > div:nth-child(2) > div > div.float-l.width-20-pct.no-select > table > tbody > tr.ng-scope > td.container-fluid.text-center.cus-cell-height.ng-scope > div:nth-child(1) > input    1200
+    sleep    5
+
+外发_导入询价
+    [Arguments]    ${fileName}    ${title}
+    Click Button    css=#combineSupplier > div.panel-wrapper.in.collapse > div > div.row.mt.text-center > button.btn.btn-warning.btn-md.mr
+    sleep    3
+    Click Element    css=#ngdialog1 > div.ngdialog-content > div.ngdialog-content > div.row.mb.mt-50 > div > span
+    sleep    2
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#ngdialog1 > div.ngdialog-content > div.ngdialog-content > div.row.form-horizontal > div > div > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    3
+    #导入
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.ngdialog-content > div.row.text-center.mb-lg.mt-lg > button
+    sleep    3
+    #保存
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.ngdialog-content > div:nth-child(5) > div.row.text-center > button
+    sleep    5
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+
+外发_保存
+    Click Button    css=#combineSupplier > div.panel-wrapper.in.collapse > div > div.row.mt.text-center > button:nth-child(4)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+
+外发_转售前报价
+    Click Button    xpath=/html/body/div[1]/section/div/div/div[11]/div/button[1]
+    sleep    5
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5

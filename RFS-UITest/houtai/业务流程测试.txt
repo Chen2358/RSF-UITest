@@ -1,0 +1,151 @@
+﻿*** Settings ***
+Resource          l1_page.txt
+
+*** Test Cases ***
+测试用例.01_代发询价
+    [Documentation]    售前代发询价及后续处理流程。
+    #代下单
+    用户登录后台    http://xxx.xxx.xxx    username    password
+    开始询价    代发询价客户    测试的询价单
+    销售助理    测试的询价单
+    内审核价    测试的询价单
+    外发询价    测试的询价单
+    售前确认报价    测试的询价单
+    询价_Teardown
+    [Teardown]    CloseDriverserver    # kill chromedriver.exe
+
+测试用例.02_代下单
+    [Documentation]    售前代下单。
+    [Setup]
+    #代下单
+    用户登录后台    http://xxx.xxx.xxx    username    password
+    售前代下单    测试的询价单
+    Comment    售前确认代下订单    测试的询价单
+    Comment    工艺审图    测试的询价单
+    Comment    采购处理    测试的询价单    测试de供应商
+    Comment    财务代下单确认开票    CJTest有限公司    17112456132694789465    6500
+    Comment    关闭浏览器
+    #供应商处理订单
+    Comment    登录供应商平台    http://xxx.xxx.xxx    username    password
+    Comment    供应商处理订单    测试的询价单    201801101234567890
+    Comment    关闭浏览器
+    #到货质检发货
+    Comment    用户登录后台     http://xxx.xxx.xxx    username    password
+    Comment    到货处理    测试的询价单    17112102358
+    Comment    质检申请返修    测试的询价单
+    Comment    返修处理    测试的询价单
+    Comment    采购质检合格    测试的询价单
+    Comment    发货处理    测试的询价单    17112102359
+    订单_Teardown    测试的询价单
+    [Teardown]    CloseDriverserver    # kill chromedriver.exe
+
+测试用例.03_客户询价
+    [Documentation]    客户询价及后续流程，包括售前确认，销售助理处理，内审核价，外发询价等。
+    [Setup]
+    #客户询价
+    登录客户端     http://xxx.xxx.xxx    username    password
+    客户开始询价    洞洞板测试
+    #后台处理
+    用户登录后台     http://xxx.xxx.xxx    username    password
+    售前确认客户询价    洞洞板测试
+    销售助理处理客户询价单    洞洞板测试
+    内审核价    洞洞板测试
+    外发询价    洞洞板测试
+    售前确认报价    洞洞板测试
+    询价_Teardown
+    [Teardown]    CloseDriverserver    # kill chromedriver.exe
+
+测试用例.04_客户下单
+    [Documentation]    客户下单及后续流程，包括售前确认，工艺审图，采购处理，财务收款，财务开票，供应商接单，供应商发货，仓库到货，质检返修，售后处理返修单，质检合格，仓库发货，客户确认及客户评价等。
+    #客户下单
+    Comment    登录客户端     http://xxx.xxx.xxx    username    password
+    Comment    客户开始下单    洞洞板测试
+    #后台处理
+    Comment    用户登录后台     http://xxx.xxx.xxx    username    password
+    Comment    售前确认客户订单    洞洞板测试
+    Comment    工艺审图处理客户订单    洞洞板测试
+    Comment    采购处理客户订单    洞洞板测试    佳顺达    采购备注
+    Comment    财务确认收款    洞洞板测试    171121023694651246
+    Comment    财务客户下单确认开票    CJTest有限公司    171121023694789465    6500
+    Comment    关闭浏览器
+    #供应商处理
+    登录供应商平台     http://xxx.xxx.xxx    username    password
+    供应商处理订单    洞洞板测试    201801101234567890
+    关闭浏览器
+    #到货质检发货
+    用户登录后台     http://xxx.xxx.xxx    username    password
+    Comment    跟单处理客户订单    洞洞板测试
+    到货处理客户订单    洞洞板测试    17112102368
+    质检申请返修    洞洞板测试
+    返修处理    洞洞板测试
+    采购质检合格客户订单    洞洞板测试
+    发货处理客户订单    洞洞板测试    17112102369
+    关闭浏览器
+    #客户确认订单
+    登录客户端     http://xxx.xxx.xxx    username    password
+    客户确认订单    洞洞板测试    质量好，交货快，值得信赖！
+    关闭浏览器
+    [Teardown]    CloseDriverserver    # kill chromedriver.exe
+
+测试用例.05_客户申请售后
+    [Documentation]    客户申请售后处理。
+    #客户申请售后
+    登录客户端     http://xxx.xxx.xxx    username    password
+    客户申请售后    洞洞板测试
+    #后台处理
+    用户登录后台     http://xxx.xxx.xxx    username    password
+    订单返修售前处理    洞洞板测试    150
+    订单返修售后处理    洞洞板测试
+    订单退款    洞洞板测试
+    财务退款    洞洞板测试    461345132465
+    删除客户订单    洞洞板测试
+    关闭浏览器
+    [Teardown]    CloseDriverserver    # kill chromedriver.exe
+
+测试用例.06_客户取消订单
+    [Documentation]    订单已走完采购后由客户发起订单取消。
+    #客户下单
+    Comment    登录客户端     http://xxx.xxx.xxx    username    password
+    Comment    客户开始下单    洞洞板测试
+    #后台处理
+    Comment    用户登录后台    http://xxx.xxx.xxx    username    password
+    Comment    售前确认客户订单    洞洞板测试
+    Comment    工艺审图处理客户订单    洞洞板测试
+    Comment    采购处理客户订单    洞洞板测试    cjchao
+    Comment    关闭浏览器
+    #客户取消订单
+    登录客户端     http://xxx.xxx.xxx    username    password
+    客户取消订单    洞洞板测试    测试客户取消订单！
+    关闭浏览器
+    #后台处理取消订单
+    用户登录后台     http://xxx.xxx.xxx    username    password
+    售前审核客户取消订单    洞洞板测试
+    采购处理客户取消订单    洞洞板测试
+    订单_Teardown    洞洞板测试
+    [Teardown]    CloseDriverserver    # kill chromedriver.exe
+
+测试用例.07_客户下单激光切割
+    [Documentation]    激光切割下单。
+    #客户下单
+    登录客户端     http://xxx.xxx.xxx    username    password
+    客户激光切割
+    关闭浏览器
+    #删除订单
+    用户登录后台     http://xxx.xxx.xxx    username    password
+    删除客户订单    激光切割材料_2D-尺子
+    关闭浏览器
+    [Teardown]    CloseDriverserver    # kill chromedriver.exe
+
+测试用例.08_客户下单3D打印
+    [Setup]
+    #客户下单
+    登录客户端     http://xxx.xxx.xxx    username    password
+    go to    http://192.168.1.10:8080/space/3DPrinting/quotation
+    sleep    5
+    客户3D打印
+    关闭浏览器
+    #删除订单
+    用户登录后台     http://xxx.xxx.xxx    username    password
+    删除客户订单    3D打印材料_胶体底板
+    关闭浏览器
+    [Teardown]    CloseDriverserver    # kill chromedriver.exe

@@ -1,0 +1,25 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+退款_售前主管_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#searchCondition > div.panel-wrapper.in.collapse > div > form > div:nth-child(1) > div:nth-child(2) > div > input    ${inName}
+    sleep    3
+
+退款_售前主管_查询
+    Click Button    css=#searchCondition > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div:nth-child(2) > div > button
+    sleep    3
+
+退款_售前主管_审核
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div.panel.panel-default.mt-lg.ng-scope > div > div > div > div > table > tbody > tr.ng-scope > td:nth-child(12) > button
+    sleep    3
+
+退款_售前主管_审核通过
+    Click Button    css=body > div > section > div > div.row.ng-scope > div > button.btn.btn-md.mr.btn-primary
+    sleep    3
+    send    {ENTER}
+    sleep    3
+    send    {ENTER}
+    sleep    5

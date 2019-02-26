@@ -1,0 +1,7 @@
+*** Settings ***
+Resource          l1_page.robot
+
+*** Keywords ***
+登录后台1
+    [Arguments]    ${url}    ${username}    ${password}
+    登录后台1    ${url}    ${username}    ${password}

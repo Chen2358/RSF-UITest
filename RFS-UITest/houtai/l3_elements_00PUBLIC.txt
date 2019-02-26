@@ -1,0 +1,254 @@
+*** Settings ***
+Library           Selenium2Library
+Library           Collections
+Library           AutoItLibrary
+Library           OperatingSystem
+
+*** Keywords ***
+打开浏览器
+    [Arguments]    ${url}
+    Open Browser    ${url}    chrome
+    Maximize Browser Window
+
+关闭浏览器
+    Close All Browsers
+    sleep    3
+
+CloseDriverserver
+    ${output}    Run and Return Rc    taskkill /IM chromedriver.exe
+    log    ${output}
+    sleep    5
+    ${output1}    Run and Return Rc    taskkill /IM geckodriver.exe
+    log    ${output1}
+    sleep    5
+
+切换到询价
+    Click Element    xpath=/html/body/div[1]/aside[1]/div/nav/ul/li[1]/a/span
+    sleep    10
+
+切换到售前工程师
+    Click Element    css=body > div > aside.aside.ng-scope > div > nav > ul > li:nth-child(1) > ul > li:nth-child(2) > a > span
+    sleep    5
+
+切换到销售助理
+    Click Element    css=body > div > aside.aside.ng-scope > div > nav > ul > li:nth-child(1) > ul > li:nth-child(3) > a > span
+    sleep    5
+
+切换到内审核价
+    Click element    xpath=/html/body/div/aside[1]/div/nav/ul/li[1]/ul/li[4]/a/span
+    sleep    10
+
+切换到外发询价
+    sleep    5
+    Click Element    css=body > div > aside.aside.ng-scope > div > nav > ul > li:nth-child(1) > ul > li:nth-child(5) > a > span
+    sleep    5
+
+切换到订单
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(2) > a > span
+    sleep    2
+
+切换到售前确认
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(2) > ul > li:nth-child(3) > a > span
+    sleep    5
+
+切换到工艺审图
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(2) > ul > li:nth-child(5) > a > span
+    sleep    5
+
+切换到采购菜单
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(3) > a > span
+    sleep    5
+
+切换到采购
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(3) > ul > li:nth-child(2) > a > span
+    sleep    10
+
+切换到质检
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(3) > ul > li:nth-child(4) > a > span
+    sleep    10
+
+切换到仓库
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(4) > a > span
+    sleep    5
+
+切换到到货
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(4) > ul > li:nth-child(2) > a > span
+    sleep    15
+
+切换到发货
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(4) > ul > li:nth-child(3) > a > span
+    sleep    5
+
+切换到订单返修
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(7) > a > span
+    sleep    5
+
+切换到售前审核
+    Click Element    xpath=/html/body/div[1]/aside[1]/div/nav/ul/li[7]/ul/li[2]/a/span
+    sleep    5
+
+切换到售后处理
+    Click Element    xpath=/html/body/div[1]/aside[1]/div/nav/ul/li[7]/ul/li[3]/a/span
+    sleep    10
+
+切换到财务
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(9) > a
+    sleep    5
+
+切换到确认收款
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(9) > ul > li:nth-child(2) > a > span
+    sleep    5
+
+切换到确认开票
+    Click Element    xpath=/html/body/div[1]/aside[1]/div/nav/ul/li[9]/ul/li[3]/a/span
+    sleep    5
+
+切换到订单退款
+    Click Element    css=body > div > aside.aside.ng-scope > div > nav > ul > li:nth-child(8) > a > span
+    sleep    5
+
+切换到退款处理
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li:nth-child(9) > ul > li:nth-child(4) > a > span
+    sleep    10
+
+切换售前申请
+    Click Element    xpath=/html/body/div[1]/aside[1]/div/nav/ul/li[8]/ul/li[2]/a/span
+    sleep    5
+
+切换到售前主管审核
+    Click Element    xpath=/html/body/div[1]/aside[1]/div/nav/ul/li[8]/ul/li[3]/a/span
+    sleep    5
+
+切换到订单取消
+    Click Element    css=body > div > aside.aside.ng-scope > div > nav > ul > li:nth-child(5) > a > span
+    sleep    5
+
+切换到订单取消售前审核
+    Click Element    css=body > div > aside.aside.ng-scope > div > nav > ul > li:nth-child(5) > ul > li:nth-child(2) > a > span
+    sleep    5
+
+切换到订单取消采购处理
+    Click Element    xpath=/html/body/div[1]/aside[1]/div/nav/ul/li[5]/ul/li[3]/a/span
+    sleep    5
+
+切换到跟单
+    Click Element    xpath=/html/body/div[1]/aside[1]/div/nav/ul/li[3]/ul/li[3]/a/span
+    sleep    5
+
+切换到第二个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles2}    Get From List    ${titles}    1
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第二个窗口
+    Select Window    title=${titles2}
+    sleep    3
+    #关闭当前窗口
+    Comment    Close Window
+
+切换到第三个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles3}    Get From List    ${titles}    2
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第三个窗口
+    Select Window    title=${titles3}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+切换到第四个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles4}    Get From List    ${titles}    3
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第四个窗口
+    Select Window    title=${titles4}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+切换到第五个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles5}    Get From List    ${titles}    4
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第五个窗口
+    Select Window    title=${titles5}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+切换到第六个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles6}    Get From List    ${titles}    5
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第六个窗口
+    Select Window    title=${titles6}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+切换到第七个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles7}    Get From List    ${titles}    6
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第六个窗口
+    Select Window    title=${titles7}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+切换到第八个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles8}    Get From List    ${titles}    7
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第六个窗口
+    Select Window    title=${titles8}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+切换到第九个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles9}    Get From List    ${titles}    8
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第六个窗口
+    Select Window    title=${titles9}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+切换到第十个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles10}    Get From List    ${titles}    9
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第六个窗口
+    Select Window    title=${titles10}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+切换到第十一个窗口
+    #获得窗口的title
+    ${titles}    Get Window Titles
+    ${titles11}    Get From List    ${titles}    10
+    Comment    ${titles1}    Get \ From List    ${titles}    0
+    #切换到第六个窗口
+    Select Window    title=${titles11}
+    #关闭当前窗口
+    sleep    3
+    Comment    Close Window
+
+延迟
+    [Arguments]    ${time}
+    sleep    ${time}
+
+确认
+    send    {ENTER}
+    sleep    5

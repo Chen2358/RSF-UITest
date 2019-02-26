@@ -1,0 +1,32 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+订单返修_售前处理_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    3
+
+订单返修_售前处理_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    sleep    10
+
+订单返修_售前处理_审核
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div.row.col-md-12 > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(13) > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+
+订单返修_售前处理_数据填写
+    [Arguments]    ${LoseMoney}
+    #客户款项选择赔偿，触发退款流程
+    Click Element    css=#orderRepair > fieldset > div:nth-child(2) > div.col-md-4 > div > div:nth-child(2) > label > span
+    sleep    2
+    #赔偿金额
+    Input Text    css=#orderRepair > fieldset > div:nth-child(2) > div.col-md-2.col-lg-2.col-sm-12.col-xs-12.pos-fix-pl > div > input    ${LoseMoney}
+    sleep    3
+
+订单返修_售前处理_提交
+    Click Button    css=#mainContainer > div:nth-child(6) > div > button:nth-child(1)
+    sleep    3
+    send    {ENTER}
+    sleep    10

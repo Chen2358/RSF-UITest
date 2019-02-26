@@ -1,0 +1,23 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+输入用户名_客户平台
+    [Arguments]    ${username}
+    Input Text    css=#login_username    ${username}
+    sleep    5
+
+输入密码_客户平台
+    [Arguments]    ${password}
+    Input Text    css=#login_password    ${password}
+    sleep    5
+
+点击登录_客户平台
+    Click Button    css=body > div.section.pt-all > div > div > div.login-bottom.pr > div.form-group > button
+    sleep    5
+
+关闭弹窗1
+    click element    css=#firstOrder > div > div > span
+
+关闭弹窗2
+    click element    css=#firstTime > div > div > div.modal-header > button > span

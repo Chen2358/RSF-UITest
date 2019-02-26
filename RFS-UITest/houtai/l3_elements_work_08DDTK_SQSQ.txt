@@ -1,0 +1,25 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+退款_售前_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#searchCondition > div.panel-wrapper.in.collapse > div > form > div:nth-child(1) > div:nth-child(2) > div > input    ${inName}
+    sleep    3
+
+退款_售前_查询
+    Click Button    css=#searchCondition > div.panel-wrapper.in.collapse > div > form > div > div:nth-child(2) > div.col-lg-2 > button
+    sleep    5
+
+退款_售前_申请
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div.panel.panel-default.mt-lg.ng-scope > div > div > div > div > table > tbody > tr.ng-scope > td:nth-child(11) > button
+    sleep    5
+
+退款_售前_提交
+    Click Button    css=body > div > section > div > div.row.ng-scope > div > button.btn.btn-md.mr.btn-primary
+    sleep    3
+    send    {ENTER}
+    sleep    2
+    send    {ENTER}
+    sleep    3

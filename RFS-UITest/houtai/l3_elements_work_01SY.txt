@@ -1,0 +1,17 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+输入用户名
+    [Arguments]    ${username}
+    Input Text    css=#login_username    ${username}
+    sleep    5
+
+输入密码
+    [Arguments]    ${password}
+    Input Text    css=#login_password    ${password}
+    sleep    5
+
+点击登录
+    Click Button    css=#loginForm > button
+    sleep    10

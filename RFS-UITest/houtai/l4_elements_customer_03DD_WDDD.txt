@@ -1,0 +1,66 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+进入客户工作台订单列表
+    Click Element    css=body > div > aside > div > nav > ul > li:nth-child(2) > ul > li:nth-child(2) > a > span
+    sleep    3
+
+搜索客户工作台订单
+    [Arguments]    ${name}
+    #输入订单名称
+    Input Text    css=#keyword    ${name}
+    sleep    3
+    #点击搜索
+    Click Element    css=#orderSearchbar > div:nth-child(1) > div.col-lg-4.col-md-9.mb.pl0 > div > span
+    sleep    3
+
+订单确认
+    [Arguments]    ${comment}
+    #点击订单确认
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid > div.panel.panel-primary.pt0 > div > div.table-responsive > div > table > tbody.no-border.table-list.clearfix.ng-scope > tr.table-content > td.text-center > div > button.col-xs-4.col-xs-offset-4.ng-scope.btn-sm-orange
+    sleep    3
+    Click Element    css=body > div > section > div > div > div.panel-body > div > div.row.text-center.mb-lg > input.btn-lg-orange
+    sleep    5
+    Input Text    css=body > div > section > div > div > div.container-fluid.preSalesConfirmation > div.container-fluid > div > div.panel-wrapper.panel-content.p > div.panel-body.ml.mr.pl > div.col-lg-9.col-md-12 > table > tbody > tr:nth-child(1) > td.p0.fs-14 > textarea    ${comment}
+    sleep    5
+    #提交
+    Click Element    css=body > div > section > div > div > div.container-fluid.preSalesConfirmation > div.container-fluid > div > div.panel-wrapper.panel-content.p > div.container-fluid.pb > div.col-lg-2.col-sm-3.ml-3p.mb > input
+    sleep    5
+    Click Button    xpath=/html/body/div[3]/div[7]/div/button
+    Comment    send    {ENTER}
+    sleep    5
+
+点击申请售后
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid > div.panel.panel-primary.pt0 > div > div.table-responsive > div > table > tbody.no-border.table-list.clearfix.ng-scope > tr.table-content > td.text-center > div > button.btn.col-xs-4.col-xs-offset-4.btn-link.text-black.ng-scope
+    sleep    5
+
+填写申请售后信息
+    #不良数量
+    Input Text    css=body > div > section > div > div > div.container-fluid > div:nth-child(1) > div:nth-child(2) > div.panel-wrapper.form-horizontal > div > div > div > div > table > tbody > tr > td:nth-child(11) > div > input    2
+    sleep    3
+    #不良类型
+    Click Element    css=body > div > section > div > div > div.container-fluid > div:nth-child(1) > div:nth-child(2) > div.panel-wrapper.form-horizontal > div > div > div > div > table > tbody > tr > td:nth-child(12) > div > div:nth-child(1) > input
+    sleep    2
+    Click Element    css=#ui-select-choices-row-1-0 > span > div
+    sleep    3
+
+提交申请售后
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid > div:nth-child(1) > div.text-center.col-xs-12.mt-50 > button
+    Wait Until Keyword Succeeds    6    2    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    Comment    send    {ENTER}
+    sleep    5
+
+订单取消
+    [Arguments]    ${comment}
+    #点击订单
+    Click Element    css=body > div.wrapper.ng-scope > section > div > div > div.container-fluid > div.panel.panel-primary.pt0 > div > div.table-responsive > div > table > tbody.no-border.table-list.clearfix.ng-scope > tr.table-content > td.text-left > a
+    sleep    3
+    Click Button    css=body > div > section > div > div > div.container-fluid.orderDetail.pb > div > div.panel.panel-primary.p0 > div > div > div > div > div > button:nth-child(1)
+    sleep    3
+    Input Text    css=#ngdialog1 > div.ngdialog-content > div.mb.clearfix > textarea    ${comment}
+    sleep    5
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.text-center > button
+    sleep    5
+    send    {ENTER}

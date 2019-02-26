@@ -1,0 +1,34 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+财务_确认收款_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    3
+
+财务_确认收款_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(3) > div.col-lg-7.text-right > button
+    sleep    5
+
+财务_确认收款_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div:nth-child(2) > div.table-responsive.col-md-12 > table > tbody > tr.ng-scope > td:nth-child(15) > div:nth-child(1) > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+
+财务_确认收款_信息填写
+    [Arguments]    ${serialNumber}
+    Input Text    css=#baseInfoPanel > div.panel-wrapper.in.collapse > div > div:nth-child(4) > div:nth-child(2) > input    ${serialNumber}
+    sleep    3
+    Click Element    //div[starts-with(@id,'1528')]
+    sleep    2
+    Click Element    css=body > div.datetimepicker.datetimepicker-dropdown-auto.dropdown-menu > div.datetimepicker-days > table > tfoot > tr:nth-child(1) > th
+    sleep    3
+
+财务_确认收款_提交
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div.container-fluid.financialConfirmationPayment.ng-scope > div:nth-child(3) > div > button:nth-child(1)
+    sleep    2
+    send    {ENTER}
+    sleep    3
+    send    {ENTER}
+    sleep    5

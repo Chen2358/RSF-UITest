@@ -1,0 +1,30 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+内审_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+
+内审_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div.col-md-1 > button
+    sleep    10
+
+内审_处理
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div.panel.panel-default.mt-lg.ng-scope > div > div > div.col-md-12.p0.mt > div > table > tbody > tr.ng-scope > td:nth-child(15) > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+
+内审_价格输入
+    Input Text    xpath=//*/td[14]/div[1]/input    1200
+    sleep    3
+
+内审_导出零件列表
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div > div > div.row.mt-lg.text-center.ng-scope > button:nth-child(1)
+    sleep    5
+
+内审_提交
+    Click Button    css=body > div > section > div > div > div:nth-child(9) > div > button:nth-child(1)
+    sleep    5
+    send    {ENTER}
+    sleep    5

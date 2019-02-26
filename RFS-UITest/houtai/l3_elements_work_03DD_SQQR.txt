@@ -1,0 +1,290 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+切换到订单_售前_全部
+    CLick Element    css=#mainContainer > div:nth-child(2) > div > div > div.panel-heading > div > ul > li:nth-child(3) > a
+    sleep    10
+
+订单_售前确认_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    5
+
+订单_售前确认_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    sleep    3
+
+订单_售前确认_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div:nth-child(2) > div.table-responsive.col-md-12 > table > tbody > tr.ng-scope > td:nth-child(18) > div:nth-child(1) > div:nth-child(1) > button.btn.btn-warning.btn-xs
+    sleep    5
+
+订单_售前确认_批量更新图纸
+    [Arguments]    ${fileName}    ${title}
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div.pl-lg.ml-lg > button
+    sleep    3
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#ngdialog1 > div.ngdialog-content > div.update-pic > div.input > div.bootstrap-filestyle.input-group > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    3
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    3
+    Click Button    xpath=//*[@id="ngdialog1"]/div[2]/div[1]/div[5]/button[2]
+    sleep    3
+    send    {F5}
+    sleep    5
+
+订单_售前确认_更新图纸
+    [Arguments]    ${fileName}    ${title}
+    Click Button    xpath=//div[@class="table-responsive"]//tbody[1]/tr[1]/td[4]/button
+    sleep    3
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#ngdialog1 > div.ngdialog-content > div.update-pic > div.input > div.bootstrap-filestyle.input-group > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    3
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    3
+    Click Button    xpath=//*[@id="ngdialog1"]/div[2]/div[1]/div[5]/button[2]
+    sleep    3
+    send    {F5}
+    sleep    5
+
+订单_售前确认_修改零件数量及费用
+    [Arguments]    ${number}    ${price}    ${expressFee}    ${designFee}    ${urgenFee}    ${discount}
+    ...    ${amountSum}    # 数量|单价|快递费|设计费|加急费|折扣|总金额
+    [Documentation]    修改零件数量，单价，快递方式，快递费，设计费，加急费，折扣，总价等信息。
+    #数量
+    Click Element    xpath=//tbody//td[7]/div/p
+    sleep    2
+    Clear Element Text    xpath=//tbody//td[7]/div/p/form/div/input
+    sleep    2
+    Input Text    xpath=//tbody//td[7]/div/p/form/div/input    ${number}
+    sleep    2
+    Click Button    xpath=//tbody//td[7]/div/p/form/div/span/button[1]
+    sleep    3
+    #单价
+    Click Element    xpath=//tbody//td[8]/div/p
+    sleep    2
+    Clear Element Text    xpath=//tbody//td[8]/div/p/form/div/input
+    sleep    2
+    Input Text    xpath=//tbody//td[8]/div/p/form/div/input    ${price}
+    sleep    2
+    Click Button    xpath=//tbody//td[8]/div/p/form/div/span/button[1]
+    sleep    3
+    #快递费
+    Click Element    xpath=//tfoot/tr[3]/td[3]//div[3]/label/span
+    sleep    2
+    Click Element    xpath=//tfoot/tr[3]/td[2]/p
+    sleep    2
+    Clear Element Text    xpath=//tfoot/tr[3]/td[2]/p/form/div/input
+    sleep    2
+    Input Text    xpath=//tfoot/tr[3]/td[2]/p/form/div/input    ${expressFee}
+    sleep    2
+    Click Button    xpath=//tfoot/tr[3]/td[2]/p/form/div/span/button[1]
+    sleep    3
+    #设计费
+    Click Element    xpath=//tfoot/tr[4]/td[2]/p
+    sleep    2
+    Clear Element Text    xpath=//tfoot/tr[4]/td[2]/p/form/div/input
+    sleep    2
+    Input Text    xpath=//tfoot/tr[4]/td[2]/p/form/div/input    ${designFee}
+    sleep    2
+    Click Button    xpath=//tfoot/tr[4]/td[2]/p/form/div/span/button[1]
+    sleep    3
+    #加急费
+    Click Element    xpath=//tfoot/tr[5]/td[2]/p
+    sleep    2
+    Clear Element Text    xpath=//tfoot/tr[5]/td[2]/p/form/div/input
+    sleep    2
+    Input Text    xpath=//tfoot/tr[5]/td[2]/p/form/div/input    ${urgenFee}
+    sleep    2
+    Click Button    xpath=//tfoot/tr[5]/td[2]/p/form/div/span/button[1]
+    sleep    3
+    #折扣
+    Click Element    xpath=//tfoot/tr[6]/td[2]/p
+    sleep    2
+    Clear Element Text    xpath=//tfoot/tr[6]/td[2]/p/form/div/input
+    sleep    2
+    Input Text    xpath=//tfoot/tr[6]/td[2]/p/form/div/input    ${discount}
+    sleep    2
+    Click Button    xpath=//tfoot/tr[6]/td[2]/p/form/div/span/button[1]
+    sleep    3
+    #总金额
+    Click Element    xpath=//tfoot/tr[7]/td[2]/p
+    sleep    2
+    Clear Element Text    xpath=//tfoot/tr[7]/td[2]/p/form/div/input
+    sleep    2
+    Input Text    xpath=//tfoot/tr[7]/td[2]/p/form/div/input    ${amountSum}
+    sleep    2
+    Click Button    xpath=//tfoot/tr[7]/td[2]/p/form/div/span/button[1]
+    sleep    3
+    #保存
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div.panel-body > div:nth-child(3) > div.col-md-12.text-center > button:nth-child(2)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+订单_售前确认_收货地址
+    [Arguments]    ${recipient}    ${contactInfo}    ${detailAddress}    # 收货人|联系电话|详细地址
+    [Documentation]    修改收货人，联系电话，详细地址等信息。
+    Click Element    css=#baseInfoPanel233 > div.panel-wrapper.form-horizontal.in.collapse > div > div:nth-child(1) > button > em
+    sleep    3
+    #收货人
+    Clear Element Text    xpath=//div[@class="row form-horizontal"]/div[1]/div/input
+    sleep    3
+    input Text    xpath=//div[@class="row form-horizontal"]/div[1]/div/input    ${recipient}
+    sleep    3
+    #联系电话
+    Clear Element Text    xpath=//div[@class="row form-horizontal"]/div[2]/div/input
+    sleep    3
+    input Text    xpath=//div[@class="row form-horizontal"]/div[2]/div/input    ${contactInfo}
+    sleep    5
+    #详细地址
+    Clear Element Text    xpath=//div[@class="row form-horizontal"]/div[4]/div/input
+    sleep    3
+    input Text    xpath=//div[@class="row form-horizontal"]/div[4]/div/input    ${detailAddress}
+    sleep    3
+    #保存
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.ui-dialog-content.text-center > button:nth-child(1)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+订单_售前确认_发票详细信息
+    [Arguments]    ${header}    ${taxpayer}    # 发票抬头|收票人姓名|联系电话|详细地址|识别码
+    [Documentation]    修改发票抬头，收票人姓名，收票人号码，详细地址等信息。
+    Click Element    css=#baseInfoPanel22 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div.invDetail.clearfix.mb > div:nth-child(1) > button > em
+    sleep    5
+    #发票抬头
+    Clear Element Text    xpath=//div[@id="general"]/div[1]/div/input
+    sleep    5
+    input Text    xpath=//div[@id="general"]/div[1]/div/input    ${header}
+    sleep    5
+    #与收货地址一致
+    Click Element    xpath=//div[@id="general"]/div[3]/div[1]/div/label/span
+    sleep    5
+    #收票人
+    Comment    Clear Element Text    xpath=//div[@id="general"]/div[3]/div[2]/div/input
+    Comment    sleep    3
+    Comment    input Text    xpath=//div[@id="general"]/div[3]/div[2]/div/input    ${takerName}
+    Comment    sleep    3
+    #收票人号码
+    Comment    Clear Element Text    xpath=//div[@id="general"]/div[3]/div[3]/div/input
+    Comment    sleep    3
+    Comment    input Text    xpath=//div[@id="general"]/div[3]/div[3]/div/input    ${takerPhone}
+    Comment    sleep    3
+    #详细地址
+    Comment    Clear Element Text    xpath=//div[@id="general"]/div[3]/div[5]/div/input
+    Comment    sleep    3
+    Comment    input Text    xpath=//div[@id="general"]/div[3]/div[5]/div/input    ${takerAddress}
+    Comment    sleep    3
+    #下一步
+    Click Button    xpath=//div[@class="ngdialog-content"]/div[3]/button[5]
+    sleep    5
+    #纳税人识别码
+    Clear Element Text    xpath=//div[@id="added"]/div[2]/div/input
+    sleep    5
+    input Text    xpath=//div[@id="added"]/div[2]/div/input    ${taxpayer}
+    sleep    3
+    #设为默认
+    Click Element    xpath=//div[@class="row form-horizontal"]/div[@class="clearfix mb"]/div/label/span
+    sleep    3
+    #保存
+    Click Button    xpath=//div[@class="ui-dialog-content text-center"]/button[2]
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+订单_售前确认_发票信息
+    [Documentation]    是否随货寄，是否需要发票回执单等信息。
+    #随货寄：是
+    Click Element    css=#baseInfoPanel22 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div.invDetail.clearfix.mb > div:nth-child(2) > div > label > div.radio.c-radio.mr-lg.pt0 > label > span
+    sleep    3
+    #回执单：是
+    Click Element    css=#baseInfoPanel22 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div.invDetail.clearfix.mb > div:nth-child(3) > div > label > div.radio.c-radio.mr-lg.pt0 > label > span
+    sleep    3
+    #立即开票：是
+    Click Element    css=#baseInfoPanel22 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div.invDetail.clearfix.mb > div:nth-child(4) > div > label > div.radio.c-radio.mr-lg.pt0 > label > span
+    sleep    3
+    #申请发票
+    Click Button    css=#baseInfoPanel22 > div.panel-wrapper.form-horizontal.in.collapse > div.text-center > button
+    sleep    5
+    #提交
+    Click Button    xpath=//div[@class="text-center"]/button[1]
+    sleep    5
+    Click Button    xpath=//div[@class="sweet-alert showSweetAlert visible"]/div[7]/div/button
+    sleep    5
+
+订单_售前确认_勾选项
+    #客户提供图纸类型：PDF
+    Click Element    css=#preTaskDonePanel > div.panel-wrapper.form-horizontal.in.collapse > div > uib-accordion:nth-child(2) > div > div:nth-child(1) > div.col-lg-2.col-md-4.mb.drawingType > div:nth-child(1) > label > span
+    sleep    3
+    #2D与3D是否一致：是
+    Click Element    css=#preTaskDonePanel > div.panel-wrapper.form-horizontal.in.collapse > div > uib-accordion:nth-child(2) > div > div:nth-child(1) > div.radio.c-radio.mr-lg > label > span
+    sleep    3
+    #优先级：中
+    Click Element    css=#baseInfoPanel3 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > div > div.ui-select-match.ng-scope > span
+    sleep    2
+    Click Element    css=#ui-select-choices-row-0-1 > span
+    sleep    2
+    #重大单：是
+    Click Element    css=#baseInfoPanel3 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(2) > div.radio.c-radio.mr-lg > label > span
+    sleep    3
+    #订单规模：打样
+    Click Element    css=#baseInfoPanel3 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(2) > div:nth-child(6) > div:nth-child(2) > label > span
+    sleep    3
+    #支付类型：全款
+    Click Element    css=#baseInfoPanel3 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div.radio.c-radio.mr-lg > label > span
+    sleep    3
+    #采购选项：不付款先采购
+    Click Element    css=#baseInfoPanel3 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div.col-md-12.form-group.row.ng-scope > div > label:nth-child(2) > span
+    sleep    3
+    #发货清单是否含单价：是
+    Click Element    css=#baseInfoPanel3 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(10) > div.radio.c-radio.mr-lg > label > span
+    sleep    3
+
+订单_售前确认_上传合同
+    [Arguments]    ${fileName}    ${title}
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#baseInfoPanel3 > div.panel-wrapper.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(7) > div:nth-child(2) > div > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    3
+
+订单_售前确认_提交
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div.row.ng-scope > div > button:nth-child(1)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+订单_售前确认_删除订单
+    Click Element    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div:nth-child(3) > div.table-responsive.col-md-12 > table > tbody > tr:nth-child(1) > th:nth-child(1) > div > label > span
+    sleep    3
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div:nth-child(1) > div.col-md-2 > button
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5

@@ -1,0 +1,68 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+订单_工艺审图_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+
+订单_工艺审图_查询
+    Click Button    xpath=//*[@id="searchPanel"]/div[2]/div/form/div/div[4]/button
+    sleep    3
+
+订单_工艺审图_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div.row.col-md-12.pr0 > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(14) > div:nth-child(1) > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+
+订单_工艺审图_批量更新图纸
+    [Arguments]    ${fileName}    ${title}
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div > div.row.mb > div.col-md-9 > button
+    sleep    3
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#ngdialog1 > div.ngdialog-content > div.update-pic > div.input > div.bootstrap-filestyle.input-group > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    3
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    3
+    Click Button    xpath=//*[@id="ngdialog1"]/div[2]/div[1]/div[5]/button[2]
+    sleep    3
+    send    {F5}
+    sleep    5
+
+订单_工艺审图_更新图纸
+    [Arguments]    ${fileName}    ${title}
+    Click Button    xpath=//div[@class="table-responsive"]/table/tbody/tr/td[3]/button
+    sleep    3
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#ngdialog1 > div.ngdialog-content > div.update-pic > div.input > div.bootstrap-filestyle.input-group > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    3
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    3
+    Click Button    xpath=//*[@id="ngdialog1"]/div[2]/div[1]/div[5]/button[2]
+    sleep    3
+    send    {F5}
+    sleep    5
+
+订单_工艺审图_提交
+    Click Button    css=body > div > section > div > div.row.task.cadDesign.ng-scope > div > div.col-md-2.col-md-offset-5.mb > button:nth-child(1)
+    sleep    2
+    Comment    send    {ENTER}
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    4
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    Comment    send    {ENTER}
+    sleep    5

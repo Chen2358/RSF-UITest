@@ -1,0 +1,34 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+进入供应商工作台询价列表
+    Click Element    css=body > div > aside.aside.ng-scope > div > nav > ul > li:nth-child(1) > ul > li:nth-child(2) > a > span
+    sleep    3
+
+搜索供应商工作台询价单
+    [Arguments]    ${name}
+    #输入询价单名称
+    Input Text    css=#keyword    ${name}
+    sleep    3
+    #点击搜索
+    Click Button    xpath=/html/body/div[1]/section/div/div/div[2]/div[1]/div[2]/div/div[2]/button
+    sleep    3
+
+处理询价单
+    [Arguments]    ${number}    # 单价
+    #处理
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.part > div.tab-list > div.tab-detail > table > tbody > tr > td.pl-70 > button
+    sleep    3
+    #输入单价
+    Click Element    css=body > div > section > div > div > div.part > div.tab-list > div.tab-detail > table > tbody > tr:nth-child(1) > td:nth-child(5) > p > a
+    sleep    3
+    Clear Element Text    css=body > div > section > div > div > div.part > div.tab-list > div.tab-detail > table > tbody > tr:nth-child(1) > td:nth-child(5) > p > form > div > input
+    sleep    3
+    Input Text    css=body > div > section > div > div > div.part > div.tab-list > div.tab-detail > table > tbody > tr:nth-child(1) > td:nth-child(5) > p > form > div > input    ${number}
+    sleep    3
+    #提交报价
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.part > div.text-center.button-group > button:nth-child(3)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5

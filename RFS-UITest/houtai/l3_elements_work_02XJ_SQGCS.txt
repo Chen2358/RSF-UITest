@@ -1,0 +1,316 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+售前_待确认_关键字
+    [Arguments]    ${danhao}
+    Input Text    css=#inputPassword3    ${danhao}
+    sleep    3
+
+售前_待确认_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    sleep    5
+
+售前_待确认_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(13) > button.btn.btn-warning.btn-xs
+    sleep    5
+
+售前_待确认_确认询价_更新图纸
+    [Arguments]    ${fileName}    ${title}
+    Click Button    xpath=//div[@class="table-responsive"]//tr[2]/td[3]/button
+    sleep    3
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#ngdialog1 > div.ngdialog-content > div.update-pic > div.input > div.bootstrap-filestyle.input-group > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    3
+    Click Button    xpath=//*[@id="ngdialog1"]/div[2]/div[1]/div[5]/button[2]
+    sleep    3
+    send    {F5}
+    sleep    5
+
+售前_待确认_确认询价_导出零件列表
+    Click Button    css=#partList > form > div.btn-edit.text-center.pr.mb > button.btn.btn-md.btn-warning.mr
+    sleep    5
+
+售前_待确认_确认询价_重新解析列表_上传图纸
+    [Arguments]    ${fileName}    ${title}
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#preSalesConfirm > div.panel-wrapper.in.collapse > div > fieldset:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    5
+
+售前_待确认_确认询价_重新解析列表_上传列表
+    [Arguments]    ${fileName}    ${title}
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#preSalesConfirm > div.panel-wrapper.in.collapse > div > fieldset:nth-child(1) > div > div:nth-child(4) > div > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    5
+
+售前_待确认_确认询价_重新解析列表
+    #优先级
+    Click Element    css=#preSalesConfirm > div.panel-wrapper.in.collapse > div > fieldset:nth-child(2) > div > div:nth-child(5) > div > select
+    sleep    3
+    Click Element    css=#preSalesConfirm > div.panel-wrapper.in.collapse > div > fieldset:nth-child(2) > div > div:nth-child(5) > div > select > option:nth-child(3)
+    sleep    3
+    #重大单
+    Click Element    css=#preSalesConfirm > div.panel-wrapper.in.collapse > div > fieldset:nth-child(3) > div > div:nth-child(3) > label > span
+    sleep    3
+    #是否有历史价格
+    Click Element    css=#preSalesConfirm > div.panel-wrapper.in.collapse > div > fieldset:nth-child(4) > div > div:nth-child(3) > label > span
+    sleep    3
+    #重新解析列表
+    Click Button    css=#preSalesConfirm > div.panel-wrapper.in.collapse > div > fieldset:nth-child(1) > div:nth-child(1) > div.col-md-2.col-md-offset-5.mt.text-center > button
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+
+售前_待确认_确认询价单
+    #提交
+    Click Button    css=#mainContainer > div:nth-child(8) > div > button:nth-child(1)
+    sleep    5
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+
+售前_待确认_转单
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(13) > button.btn.btn-primary.btn-xs
+
+售前_待确认_代发询价
+    sleep    5
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div > div.row.ng-scope > div > button:nth-child(3)
+    sleep    5
+
+售前_待确认_代发询价_选择客户
+    [Arguments]    ${kehuname}
+    Input Text    xpath=//*[@id="inputUserName"]    ${kehuname}
+    Click Button    css=#panel0 > div.panel-body.row.in.collapse > form > div > div > div.col-md-7 > button.btn.btn-primary.btn-md.mr
+    sleep    5
+    Click Element    css=#table-ext-1 > tbody > tr.ng-scope > td:nth-child(1) > div > label > span
+    sleep    5
+
+售前_待确认_代发询价_上传图纸
+    Click Button    xpath=//*[@id="panel1"]/div[2]/div[1]/div[1]/div/div/span
+    sleep    2
+
+售前_待确认_代发询价_上传列表
+    Comment    click Button    css=#panel1 > div.panel-body.row.mt-lg.form-horizontal.in.collapse > div:nth-child(2) > div.col-md-12.row.mb-lg > div > div > span
+    Comment    sleep    10
+
+售前_待确认_代发询价_解析列表
+    sleep    5
+    Click Button    css=#panel1 > div.panel-body.row.mt-lg.form-horizontal.in.collapse > div.row > div > button
+    sleep    10
+
+售前_待确认_代发询价_询价单名称
+    [Arguments]    ${name}
+    Input Text    css=#panel3 > div.panel-body.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(1) > div > input    ${name}
+    sleep    3
+
+售前_待确认_代发询价_售前选择
+    sleep    5
+    Click element    css=#panel3 > div.panel-body.form-horizontal.in.collapse > div:nth-child(3) > div > div > select
+    sleep    5
+    Click element    css=#panel3 > div.panel-body.form-horizontal.in.collapse > div:nth-child(3) > div > div > select > option:nth-child(8)
+
+售前_待确认_代发询价_提交
+    Click Button    css=#panel3 > div.panel-body.form-horizontal.in.collapse > div.col-md-12.text-center > button
+    sleep    3
+    send    {ENTER}
+    sleep    10
+
+售前_待报价
+    Click Element    xpath=//*[@id="mainContainer"]/div[2]/div/div/div/div[1]/ul/li[4]
+    sleep    5
+
+售前_待报价_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(14) > button.btn.btn-warning.btn-xs
+    sleep    10
+
+售前_已报价
+    Click Element    xpath=//*[@id="mainContainer"]/div[2]/div/div/div/div[1]/ul/li[5]/a
+    sleep    10
+
+售前_已报价_查看
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(16) > button.btn.btn-primary.btn-xs
+    sleep    5
+
+售前_待报价_导入售前审核价格
+    [Arguments]    ${fileName}    ${title}
+    Click Button    css=#partList > div.panel-wrapper.in.collapse > div > div.row.text-center > button:nth-child(1)
+    sleep    3
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#ngdialog1 > div.ngdialog-content > div.ngdialog-content > div.row.form-horizontal > div > div > span > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    3
+    #导入
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.ngdialog-content > div.row.text-center.mb-lg.mt-lg > button
+    sleep    3
+    #保存
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.ngdialog-content > div:nth-child(4) > div.row.text-center > button
+    sleep    5
+
+售前_待报价_处理_导出报价单
+    #导出报价单(xls)
+    Click Button    css=#mainContainer > div:nth-child(9) > div:nth-child(2) > button:nth-child(3)
+    sleep    10
+    #导出报价单(pdf)
+    Click Button    css=#mainContainer > div:nth-child(9) > div:nth-child(2) > button:nth-child(4)
+    sleep    10
+    #一键导出报价单(pdf)
+    Click Button    css=#mainContainer > div:nth-child(9) > div:nth-child(2) > button:nth-child(5)
+    sleep    10
+
+售前_待报价_处理_完成报价
+    Click Button    css=#mainContainer > div:nth-child(9) > div:nth-child(2) > button:nth-child(2)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    Comment    send    {ENTER}
+    sleep    10
+
+代发询价上传图纸文件
+    [Arguments]    ${fileName}    ${title}
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=#panel1 > div.panel-body.row.mt-lg.form-horizontal.in.collapse > div:nth-child(1) > div.col-md-12.row.mb-lg > div > div > span
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    2
+
+代发询价上传零件列表
+    [Arguments]    ${fileName}    ${title}
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    2    1    Click element    css=#panel1 > div.panel-body.row.mt-lg.form-horizontal.in.collapse > div:nth-child(2) > div.col-md-12.row.mb-lg > div > div > span
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    2
+
+售前_待确认_代发询价_批量编辑
+    Click Button    css=#panel2 > form > div.btn-edit.text-center.pr > button:nth-child(1)
+    sleep    3
+    Input Text    css=#\38 e011242-e32e-40c5-bf8e-d7b4cb19c5a9 > td:nth-child(3) > div:nth-child(2) > div > div > div > input    6061铝合金
+    sleep    3
+    Click Button    css=#panel2 > form > div.btn-edit.text-center.pr > button.btn.btn-primary.btn-md.mt.mr
+    sleep    3
+
+售前_待确认_代发询价_优先级
+    Click Element    css=#panel3 > div.panel-body.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(2) > div > div > select
+    sleep    3
+    Click Element    css=#panel3 > div.panel-body.form-horizontal.in.collapse > div:nth-child(1) > div:nth-child(2) > div > div > select > option:nth-child(3)
+    sleep    3
+
+售前_待确认_代发询价_重大单
+    Click Element    css=#panel3 > div.panel-body.form-horizontal.in.collapse > div.col-md-6.form-group > div > div > div:nth-child(1) > label > span
+    sleep    3
+
+售前_待确认_代发询价_历史价格
+    Click Element    css=#panel3 > div.panel-body.form-horizontal.in.collapse > div:nth-child(6) > div > div > div:nth-child(2) > label > span
+    sleep    5
+
+售前_待报价_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    5
+
+售前_待报价_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    Sleep    5
+
+售前_已报价_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+
+售前_已报价_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    sleep    10
+
+售前_代下单_更改数量
+    [Arguments]    ${number}
+    Click Element    css=div.btn-group>span
+    sleep    2
+    Clear Element Text    css=div.btn-group>span>form>div>input
+    sleep    2
+    Input Text    css=div.btn-group>span>form>div>input    ${number}
+    sleep    2
+    Click Button    css=div.btn-group>span>form>div>span>button
+    sleep    3
+
+售前_代下单_提交
+    Click Button    css=body > div > section > div > div:nth-child(8) > div > div.col-md-2.col-md-offset-5.mb > button:nth-child(1)
+    sleep    6
+    wait until element is enabled    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button    5
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    10
+
+售前_已报价_导出
+    #导出报价单(xls)
+    Click Button    css=#mainContainer > div:nth-child(9) > div > button:nth-child(3)
+    sleep    10
+    #导出报价单(pdf)
+    Click Button    css=#mainContainer > div:nth-child(9) > div > button:nth-child(4)
+    sleep    10
+    #一键导出报价单
+    Click Button    css=#mainContainer > div:nth-child(9) > div > button:nth-child(5)
+    sleep    10
+
+售前_已报价_代下单
+    Click Button    css=#mainContainer > div:nth-child(9) > div > button.btn.btn-md.btn-warning.mr
+    sleep    5
+
+售前_全部
+    Click Element    css=#mainContainer > div:nth-child(2) > div > div > div > div:nth-child(1) > ul > li:nth-child(1) > a
+    sleep    10
+
+售前_选择删除询价单
+    Click Element    css=#mainContainer > div:nth-child(2) > div > div > div > div.table-responsive > table > tbody > tr:nth-child(1) > td:nth-child(1) > div > label > span
+    sleep    5
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div > div.row.ng-scope > div > button.btn.btn-primary.btn-md.ng-scope
+    sleep    5
+    send    {ENTER}
+    sleep    5

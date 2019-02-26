@@ -1,0 +1,18 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+采购_跟单_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword5    ${inName}
+    sleep    3
+
+采购_跟单_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(3) > div.col-md-1 > button
+    sleep    5
+
+采购_跟单_接受采购
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div:nth-child(2) > div > div > div.panel-body.pt0 > form > div > div:nth-child(2) > table > tbody > tr.ng-scope > td:nth-child(14) > div > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3

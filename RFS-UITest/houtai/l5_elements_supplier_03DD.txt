@@ -1,0 +1,50 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+进入供应商工作台抢单列表
+    Click Element    css=body > div > aside.aside.ng-scope > div > nav > ul > li:nth-child(1) > ul > li:nth-child(3) > a > span
+    sleep    3
+
+搜索供应商工作台订单
+    [Arguments]    ${name}
+    #输入订单名称
+    Input Text    css=#keyword    ${name}
+    sleep    3
+    #点击搜索
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.part > div.msg > div.form-horizontal.search > div > div.col-md-6 > button
+    sleep    3
+
+接受订单
+    #接受订单
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.part > div:nth-child(2) > div > div.tab-detail > table > tbody > tr > td.pl-70 > button.btn-sm-blue.ng-scope
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3
+
+进入供应商工作台订单列表
+    Click Element    css=body > div.wrapper.ng-scope > aside.aside.ng-scope > div > nav > ul > li.ng-scope.active > ul > li:nth-child(4) > a > span
+    sleep    3
+
+转到待交付列表
+    #待交付
+    Click Element    css=body > div.wrapper.ng-scope > section > div > div > div.part > div:nth-child(2) > div > div.nav-tab > span:nth-child(2)
+    sleep    3
+
+处理订单
+    [Arguments]    ${expreeNo}    # 快递单号
+    #处理
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.part > div:nth-child(2) > div > div.tab-detail > table > tbody > tr > td.pl-70 > button.btn-sm-orange.ng-scope
+    sleep    3
+    #全选零件
+    Click Element    css=body > div.wrapper.ng-scope > section > div > div > div.part > div:nth-child(5) > div.tab-detail > table > thead > tr > th.text-left.tr-1 > div > label > span
+    sleep    3
+    #发货
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div.part > div:nth-child(5) > div.tab-detail > div.col-md-12.text-center > button.btn-lg-blue.ml
+    sleep    3
+    #快递单号
+    Input Text    css=#ngdialog1 > div.ngdialog-content > form > div.row.form-group > div:nth-child(3) > div > input    ${expreeNo}
+    sleep    3
+    #确认发货
+    Click Button    css=#ngdialog1 > div.ngdialog-content > form > div:nth-child(4) > div > button.btn-xs-blue.ng-scope
+    sleep    3

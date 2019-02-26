@@ -1,0 +1,40 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+财务_确认开票_关键字
+    [Arguments]    ${inName}
+    #公司名称
+    Input Text    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(1) > div.col-md-3 > input    ${inName}
+    sleep    3
+
+财务_确认开票_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(1) > div.col-md-1 > button
+    sleep    5
+
+财务_确认开票_处理
+    Click Button    css=body > div.wrapper.ng-scope > section > div > div > div > div > div.row > div > div > div.panel-body > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(14) > button
+    sleep    5
+
+财务_确认开票_填写发票信息
+    [Arguments]    ${invoiceNumber}    ${invoiceAmount}
+    Click Button    css=body > div > section > div > div > div > div:nth-child(3) > button
+    sleep    3
+    #发票号
+    Input Text    css=#ngdialog1 > div.ngdialog-content > div.ui-dialog-title.text-center > div.form-horizontal > div > div:nth-child(3) > input    ${invoiceNumber}
+    sleep    3
+    #发票金额
+    Input Text    css=#ngdialog1 > div.ngdialog-content > div.ui-dialog-title.text-center > div.form-horizontal > div > div.col-md-2 > input    ${invoiceAmount}
+    sleep    3
+    #开票时间
+    Click Element    //div[starts-with(@id,'1528')]
+    sleep    3
+    Click Element    css=body > div.datetimepicker.datetimepicker-dropdown-auto.dropdown-menu > div.datetimepicker-days > table > tfoot > tr:nth-child(1) > th
+    sleep    3
+    #提交
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.ui-dialog-title.text-center > div.pt-lg > button:nth-child(2)
+    sleep    3
+    #开票成功
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    3

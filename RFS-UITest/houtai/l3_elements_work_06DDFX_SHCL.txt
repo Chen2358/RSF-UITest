@@ -1,0 +1,83 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+订单返修_售后处理_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    3
+
+订单返修_售后处理_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(3) > div.col-md-1 > button
+    sleep    10
+
+订单返修_售后处理_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div.row.col-md-12 > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(17) > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+
+订单返修_售后处理_数据填写
+    #解决方案：返修
+    Click Element    xpath=//div[@class="row"][3]//tbody/tr[2]/td[13]
+    sleep    2
+    Click Element    xpath=//div[@class="row"][3]//tbody/tr[2]/td[13]/div/ul/li/div[3]/span[1]
+    sleep    2
+    #责任方：供应商
+    Click Element    xpath=//div[@class="row"][3]//tbody/tr[2]/td[14]
+    sleep    2
+    Click Element    xpath=//div[@class="row"][3]//tbody/tr[2]/td[14]/div/ul/li/div[5]/span
+    sleep    2
+    #客户发回件：否
+    Click Element    xpath=//div[@class="row"][3]//tbody/tr[2]/td[15]
+    sleep    2
+    Click Element    xpath=//div[@class="row"][3]//tbody/tr[2]/td[15]/div/ul/li/div[4]/span
+    sleep    3
+    Comment    CLick Element    xpath=//*[@id="repair01"]/div[2]/div/div[1]/div/table/tbody/tr[2]/td[5]/div/div[1]/input
+    Comment    sleep    3
+    Comment    Click Element    css=#ui-select-choices-row-3-0 > span > div
+    Comment    sleep    3
+    #填写返修交期
+    Click Element    css=#repair01 > div.panel-heading > div > div.col-md-2.row > em > em
+    Click Element    //div[starts-with(@id,'1528')]
+    sleep    2
+    Click Element    css=body > div.datetimepicker.datetimepicker-dropdown-auto.dropdown-menu > div.datetimepicker-days > table > tfoot > tr:nth-child(1) > th
+    sleep    3
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.clearfix > div.row.text-center.col-md-12.m-lg > button:nth-child(1)
+    sleep    3
+    #不良数量
+    Input Text    css=#repair01 > div.panel-wrapper.in.collapse > div > div.row > div > table > tbody > tr.ng-scope > td:nth-child(4) > div > input    2
+    sleep    3
+    #保存
+    Comment    Click Button    css=#mainContainer > div:nth-child(4) > div > div:nth-child(4) > div > button:nth-child(5)
+    Comment    sleep    3
+    Comment    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    Comment    sleep    3
+
+订单返修_售后处理_提交
+    CLick Button    css=#mainContainer > div:nth-child(4) > div > div:nth-child(4) > div > button:nth-child(1)
+    sleep    5
+    Comment    Wait Until Keyword Succeeds    6    2    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    Comment    Send    {ENTER}
+    Click Button    xpath=/html/body/div[3]/div[7]/div/button
+    sleep    5
+
+订单返修_售后处理_切换到待返修
+    #切换到待返修
+    Click Element    xpath=//*[@id="mainContainer"]/div[2]/div/div/div[1]/ul/li[3]/a
+    sleep    5
+
+订单返修_售后处理_待返修_处理
+    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > div.row.col-md-12 > div.table-responsive > table > tbody > tr.ng-scope > td:nth-child(17) > button
+    sleep    5
+
+订单返修_售后处理_待返修_提交
+    #勾选零件
+    Click Element    css=#repair01 > div.panel-wrapper.in.collapse > div > div > div > table > tbody > tr:nth-child(1) > td.text-center > div > label > span
+    sleep    3
+    #提交
+    Click Button    css=body > div > section > div > div > div:nth-child(4) > div > div:nth-child(4) > div > button:nth-child(4)
+    sleep    3
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    sleep    5

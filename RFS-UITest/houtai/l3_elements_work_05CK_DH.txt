@@ -1,0 +1,39 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+仓库_到货_关键字
+    [Arguments]    ${inName}
+    Input Text    css=#inputPassword3    ${inName}
+    sleep    3
+
+仓库_到货_查询
+    Click Button    css=#searchPanel > div.panel-wrapper.in.collapse > div > form > div:nth-child(2) > div.col-md-1 > button
+    sleep    5
+
+仓库_到货_处理
+    Click Element    css=#mainContainer > div:nth-child(2) > div > div > div.panel-body.pt0 > form > div > div:nth-child(3) > table > tbody > tr.ng-scope > td:nth-child(17) > div > button.btn.btn-warning.btn-xs.ng-scope
+    sleep    5
+
+仓库_到货_勾选零件
+    Click Element    css=#partList > div.panel-wrapper.in.collapse > div > div > table > tbody > tr.control-label > td:nth-child(1) > div > label > span
+    sleep    3
+
+仓库_到货_提交
+    [Arguments]    ${deliveryNo}    # 送货单号
+    #到货
+    Click Button    css=body > div > section > div > div.ng-scope > div.row.mb > div > button:nth-child(1)
+    sleep    3
+    #送货单号
+    Input Text    css=#ngdialog1 > div.ngdialog-content > div.clearfix > div:nth-child(1) > div.col-md-6.mt.ng-scope > div > input    ${deliveryNo}
+    sleep    3
+    #评价
+    Click Element    css=#ngdialog1 > div.ngdialog-content > div.clearfix > div.clearfix.mt-lg.pt-lg.bt > div:nth-child(1) > div > table > tbody > tr.control-label.ng-scope > td:nth-child(2) > div:nth-child(1) > label > span
+    sleep    3
+    #到货并结束跟单
+    Click Button    css=#ngdialog1 > div.ngdialog-content > div.row.ui-dialog-content.text-center.mt > button:nth-child(2)
+    sleep    4
+    Click Button    css=body > div.sweet-alert.showSweetAlert.visible > div.sa-button-container > div > button
+    Comment    send    {ENTER}
+    sleep    15

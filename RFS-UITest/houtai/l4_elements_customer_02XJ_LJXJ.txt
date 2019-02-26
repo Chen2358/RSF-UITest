@@ -1,0 +1,57 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Keywords ***
+点击立即询价
+    Click Element    css=body > div > aside > div > nav > ul > li:nth-child(1) > ul > li:nth-child(2) > a > span
+    sleep    5
+
+客户上传零件图纸
+    [Arguments]    ${fileName}    ${title}
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    6    2    Click element    css=body > div > section > div > div.panel.star-quotation.col-lg-9.pr0.pl0.mb0.ng-scope > div:nth-child(3) > div:nth-child(1) > div.upload-section.clearfix.mb0 > div.col-lg-12.p0 > div > div.box-placeholder.my-drop-zone.bg-user > label
+    sleep    5
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    5
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    5
+
+上传图纸点击下一步
+    Click Button    xpath=/html/body/div/section/div/div[1]/div[3]/div[5]/button[2]
+    sleep    3
+
+客户上传零件列表
+    [Arguments]    ${fileName}    ${title}
+    log    ${fileName}    INFO
+    ${fileName}    convert to string    ${fileName}
+    log    ${fileName}
+    Wait Until Keyword Succeeds    2    1    Click element    css=body > div > section > div > div.panel.star-quotation.col-lg-9.pr0.pl0.mb0.ng-scope > div:nth-child(3) > div:nth-child(2) > div.upload-section.clearfix.mb0 > div.col-lg-12.p0 > div:nth-child(1) > div.box-placeholder.my-drop-zone.bg-user > label
+    sleep    2
+    Win Wait    ${title}    #等待title对应的窗口出现
+    log    ${title}
+    Win Activate    ${title}    #激活title对应的窗口
+    Control Set Text    \    \    Edit1    ${fileName}    #输入文件名
+    sleep    2
+    control click    \    \    Button1    #单击“打开”按钮，上传
+    sleep    2
+
+上传列表点击下一步
+    Click Button    xpath=/html/body/div/section/div/div[1]/div[3]/div[5]/button[2]
+    sleep    3
+
+填写零件信息
+    [Arguments]    ${inname}
+    #询价单名称
+    Clear Element Text    css=body > div > section > div > div.panel.star-quotation.col-lg-9.pr0.pl0.mb0.ng-scope > div:nth-child(3) > div:nth-child(3) > div:nth-child(3) > div.col-md-8.col-lg-8 > input
+    sleep    3
+    Input Text    css=body > div > section > div > div.panel.star-quotation.col-lg-9.pr0.pl0.mb0.ng-scope > div:nth-child(3) > div:nth-child(3) > div:nth-child(3) > div.col-md-8.col-lg-8 > input    ${inname}
+    sleep    3
+    Comment    wait until element is visible    xpath=/html/body/div/section/div/div[1]/div[3]/div[5]/button[2]    5
+    Click Button    xpath=/html/body/div/section/div/div[1]/div[3]/div[5]/button[2]
+    sleep    4

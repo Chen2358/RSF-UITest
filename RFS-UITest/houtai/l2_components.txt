@@ -1,0 +1,600 @@
+*** Settings ***
+Resource          l3_elements_00PUBLIC.txt
+Resource          l3_elements_work_01SY.txt    # 后台首页
+Resource          l3_elements_work_02XJ_SQGCS.txt    # 询价-售前工程师
+Resource          l3_elements_work_02XJ_XSZL.txt    # 询价-销售助理
+Resource          l3_elements_work_02XJ_NSHJ.txt    # 询价-内审核价
+Resource          l3_elements_work_02XJ_WFXJ.txt    # 询价-外发询价
+Resource          l3_elements_work_03DD_SQQR.txt    # 订单-售前确认
+Resource          l3_elements_work_03DD_GYST.txt    # 订单-工艺审图
+Resource          l3_elements_work_04CG_CG.txt    # 采购-采购
+Resource          l3_elements_work_04CG_ZJ.txt    # 采购-质检
+Resource          l3_elements_work_05CK_DH.txt    # 仓库-到货
+Resource          l3_elements_work_05CK_FH.txt    # 仓库-发货
+Resource          l3_elements_work_06DDFX_SHCL.txt    # 订单返修-售后处理
+Resource          l4_elements_customer_01SY.txt    # 客户端首页
+Resource          l4_elements_customer_02XJ_LJXJ.txt    # 客户-立即询价
+Resource          l4_elements_customer_02XJ_WDXJ.txt    # 客户-我的询价
+Resource          l4_elements_customer_03DD_WDDD.txt    # 客户-我的订单
+Resource          l3_elements_work_06DDFX_SQSH.txt    # 订单返修-售前审核
+Resource          l3_elements_work_07CW_QRSK.txt    # 财务-确认收款
+Resource          l3_elements_work_08DDTK_SQSQ.txt    # 订单退款-售前申请
+Resource          l3_elements_work_08DDTK_ZGSH.txt    # 订单退款-主管审核
+Resource          l3_elements_work_09DDQX_SQSH.txt    # 订单取消_售前审核
+Resource          l3_elements_work_09DDQX_CGCL.txt    # 订单取消_采购处理
+Resource          l3_elements_work_07CW_TKCL.txt    # 财务_退款处理
+Resource          l3_elements_work_07CW_QRKP.txt    # 财务-确认开票
+Resource          l5_elements_supplier_01SY.txt    # 供应商登录页面
+Resource          l5_elements_supplier_02XJ.txt    # 供应商询价页面
+Resource          l5_elements_supplier_03DD.txt    # 供应商订单页面
+Resource          l4_elements_customer_02XJ_JGQG.txt    # 客户端激光切割页面
+Resource          l4_elements_customer_02XJ_3DDY.txt    # 客户-3D打印
+Resource          l3_elements_work_04CG_GD.txt    # 采购-跟单
+
+*** Keywords ***
+登录后台
+    [Arguments]    ${url}    ${username}    ${password}
+    打开浏览器    ${url}
+    延迟    5
+    输入用户名    ${username}
+    输入密码    ${password}
+    点击登录
+
+转到售前工程师
+    切换到询价
+    切换到售前工程师
+
+代发询价单信息输入
+    [Arguments]    ${name}    ${danName}
+    售前_待确认_代发询价_选择客户    ${name}
+    代发询价上传图纸文件    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    代发询价上传零件列表    E:\\upload\\洞洞板-速加网零件清单模版.xls    打开
+    售前_待确认_代发询价_解析列表
+    Comment    售前_待确认_代发询价_批量编辑
+    售前_待确认_代发询价_询价单名称    ${danName}
+    售前_待确认_代发询价_优先级
+    售前_待确认_代发询价_售前选择
+    售前_待确认_代发询价_重大单
+    售前_待确认_代发询价_历史价格
+    售前_待确认_代发询价_提交
+
+转到销售助理
+    Comment    切换到询价
+    切换到销售助理
+
+销售助理处理
+    [Arguments]    ${inName}
+    Comment    确认
+    Comment    延迟    3
+    助理_关键字    ${inName}
+    助理_查询
+    助理_处理
+    切换到第三个窗口
+    助理_更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    助理_导出列表
+    助理_重新解析列表_上传图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    助理_重新解析列表_上传列表    E:\\upload\\洞洞板-速加网零件清单模版.xls    打开
+    助理_重新解析列表
+    助理_开始询价
+
+转到销售助理-处理客户询价单
+    Comment    切换到询价
+    切换到销售助理
+
+转到内审核价
+    切换到内审核价
+
+内审核价处理
+    [Arguments]    ${inName}
+    内审_关键字    ${inName}
+    内审_查询
+    内审_处理
+    切换到第四个窗口
+    内审_价格输入
+    内审_导出零件列表
+    内审_提交
+
+转到外发询价
+    切换到外发询价
+
+外发询价处理
+    [Arguments]    ${inName}
+    外发_关键字    ${inName}
+    外发_查询
+    外发_处理
+    切换到第五个窗口
+    Comment    外发_材料选择
+    Comment    外发_表面处理
+    外发_导出零件列表
+    外发_价格输入
+    外发_导入询价    E:\\upload\\外发导入内审报价.xls    打开
+    外发_保存
+    外发_转售前报价
+
+转到售前工程师_待报价
+    Comment    切换到询价
+    切换到售前工程师
+    售前_待报价
+
+售前工程师确认询价
+    [Arguments]    ${inName}
+    Comment    售前_待报价_处理
+    售前_待报价_关键字    ${inName}
+    售前_待报价_查询
+    售前_待报价_处理
+    切换到第六个窗口
+    售前_待报价_导入售前审核价格    E:\\upload\\售前导入审核价格.xls    打开
+    售前_待报价_处理_导出报价单
+    售前_待报价_处理_完成报价
+
+转到代发询价页面
+    Comment    sleep    5
+    Comment    Click Button    css=#mainContainer > div:nth-child(2) > div > div > div > div.row.ng-scope > div > button:nth-child(3)
+    Comment    sleep    5
+    售前_待确认_代发询价
+    切换到第二个窗口
+
+转到售前_已报价
+    切换到询价
+    切换到售前工程师
+    售前_已报价
+
+代下单
+    [Arguments]    ${inName}    ${number}
+    售前_已报价_关键字    ${inName}
+    售前_已报价_查询
+    售前_已报价_查看
+    切换到第二个窗口
+    售前_代下单_更改数量    ${number}
+    售前_已报价_导出
+    售前_已报价_代下单
+    售前_代下单_提交
+
+售前处理订单
+    [Arguments]    ${inName}
+    订单_售前确认_关键字    ${inName}
+    订单_售前确认_查询
+    订单_售前确认_处理
+    切换到第三个窗口
+    订单_售前确认_批量更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    订单_售前确认_更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    订单_售前确认_修改零件数量及费用    3    2000    200    200    200    100
+    ...    6500
+    订单_售前确认_收货地址    CJTest    15626532799    固戍泰华梧桐岛
+    订单_售前确认_发票详细信息    CJTest有限公司    4561324132123111
+    订单_售前确认_发票信息
+    订单_售前确认_勾选项
+    订单_售前确认_上传合同    E:\\upload\\【速加网合同】洞洞板合同.pdf    打开
+    订单_售前确认_提交
+
+转到工艺审图
+    切换到工艺审图
+
+工艺审图处理
+    [Arguments]    ${inName}
+    订单_工艺审图_关键字    ${inName}
+    订单_工艺审图_查询
+    订单_工艺审图_处理
+    切换到第四个窗口
+    订单_工艺审图_批量更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    订单_工艺审图_更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    订单_工艺审图_提交
+
+转到采购
+    切换到采购菜单
+    切换到采购
+
+采购处理订单
+    [Arguments]    ${inName}    ${suppName}
+    采购_采购_关键字    ${inName}
+    采购_采购_查询
+    采购_采购_处理
+    切换到第五个窗口
+    采购_采购_修改供应商    ${suppName}
+    采购_采购_生成采购单
+    采购_采购_约定交期&采购备注
+    采购_采购_一键采购
+
+转到到货
+    切换到仓库
+    切换到到货
+
+仓库到货
+    [Arguments]    ${inName}    ${deliveryNo}
+    仓库_到货_关键字    ${inName}
+    仓库_到货_查询
+    仓库_到货_处理
+    切换到第二个窗口
+    仓库_到货_勾选零件
+    仓库_到货_提交    ${deliveryNo}
+
+转到质检
+    切换到采购菜单
+    切换到质检
+
+申请返修
+    [Arguments]    ${inName}
+    采购_质检_关键字    ${inName}
+    采购_质检_查询
+    采购_质检_处理
+    切换到第三个窗口
+    采购_质检_申请返修
+
+转到订单返修售后处理
+    切换到订单返修
+    切换到售后处理
+
+售后处理返修单
+    [Arguments]    ${inName}
+    订单返修_售后处理_关键字    ${inName}
+    订单返修_售后处理_查询
+    订单返修_售后处理_处理
+    切换到第四个窗口
+    订单返修_售后处理_数据填写
+    订单返修_售后处理_提交
+    订单返修_售后处理_切换到待返修
+    订单返修_售后处理_关键字    ${inName}
+    订单返修_售后处理_查询
+    订单返修_售后处理_待返修_处理
+    切换到第五个窗口
+    订单返修_售后处理_待返修_提交
+
+质检处理
+    [Arguments]    ${inName}
+    采购_质检_关键字    ${inName}
+    采购_质检_查询
+    采购_质检_处理
+    切换到第五个窗口
+    采购_质检_批量合格
+    采购_质检_质检完成
+
+转到发货
+    切换到仓库
+    切换到发货
+
+仓库发货
+    [Arguments]    ${inName}    ${expressNo}
+    仓库_发货_关键字    ${inName}
+    仓库_发货_查询
+    仓库_发货_处理
+    切换到第六个窗口
+    仓库_发货_填写发货信息    ${expressNo}
+    仓库_发货_结束发货
+
+关闭所有窗口
+    关闭浏览器
+
+转到售前_全部
+    切换到询价
+    切换到售前工程师
+    售前_全部
+
+删除询价单
+    [Arguments]    ${inName}
+    售前_已报价_关键字    ${inName}
+    售前_已报价_查询
+    售前_选择删除询价单
+
+登录客户工作台
+    [Arguments]    ${url}    ${username}    ${password}
+    打开浏览器    ${url}
+    延迟    5
+    Comment    关闭弹窗1
+    Comment    延迟    15
+    Comment    关闭弹窗2
+    Comment    延迟    3
+    输入用户名_客户平台    ${username}
+    输入密码_客户平台    ${password}
+    点击登录_客户平台
+
+客户询价
+    [Arguments]    ${name}
+    点击立即询价
+    客户上传零件图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    上传图纸点击下一步
+    客户上传零件列表    E:\\upload\\洞洞板-速加网零件清单模版.xls    打开
+    上传列表点击下一步
+    填写零件信息    ${name}
+    关闭浏览器
+
+确认客户询价
+    [Arguments]    ${inname}
+    售前_待确认_关键字    ${inname}
+    售前_待确认_查询
+    售前_待确认_处理
+    切换到第二个窗口
+    售前_待确认_确认询价_更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    售前_待确认_确认询价_导出零件列表
+    售前_待确认_确认询价_重新解析列表_上传图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    售前_待确认_确认询价_重新解析列表_上传列表    E:\\upload\\洞洞板-速加网零件清单模版.xls    打开
+    售前_待确认_确认询价_重新解析列表
+    售前_待确认_确认询价单
+
+客户下单
+    [Arguments]    ${name}
+    进入客户工作台询价列表
+    搜索客户工作台询价单    ${name}
+    点击立即下单
+    判断是否有地址    CJTest    15626532789    固戍泰华梧桐岛9B
+    Comment    客户下单_添加收货地址    CJTest111    15626532789    固戍泰华梧桐岛9B
+    Comment    客户下单_修改收货地址    CJTest111    15626532789    固戍泰华梧桐岛9B
+    判断是否有发票    深圳CJTest有限公司    4561324132123112
+    Comment    客户下单_添加发票信息    深圳CJTest有限公司    4561324132123112
+    Comment    客户下单_修改发票信息    深圳CJTest有限公司    4561324132123112
+    选择支付方式
+    客户上传合同    E:\\upload\\【速加网合同】洞洞板合同.pdf    打开
+    提交订单
+    关闭浏览器
+
+转到售前确认
+    切换到订单
+    切换到售前确认
+
+售前处理客户订单
+    [Arguments]    ${inName}
+    订单_售前确认_关键字    ${inName}
+    订单_售前确认_查询
+    订单_售前确认_处理
+    切换到第二个窗口
+    Comment    订单_售前确认_批量更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    Comment    订单_售前确认_更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    Comment    订单_售前确认_修改零件数量及费用    3    2000    200    200    200
+    ...    100    6500
+    订单_售前确认_收货地址    CJTest    15626532799    固戍泰华梧桐岛
+    订单_售前确认_发票详细信息    CJTest有限公司    4561324132123111
+    订单_售前确认_发票信息
+    订单_售前确认_勾选项
+    Comment    订单_售前确认_上传合同    E:\\upload\\【速加网合同】洞洞板合同.pdf    打开
+    订单_售前确认_提交
+
+审图处理客户下单
+    [Arguments]    ${inName}
+    订单_工艺审图_关键字    ${inName}
+    订单_工艺审图_查询
+    订单_工艺审图_处理
+    切换到第三个窗口
+    订单_工艺审图_批量更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    订单_工艺审图_更新图纸    E:\\upload\\【报价】20170328-洞板-询价单.rar    打开
+    订单_工艺审图_提交
+
+采购处理客户下单
+    [Arguments]    ${inName}    ${suppName}    ${remark}
+    采购_采购_关键字    ${inName}
+    采购_采购_查询
+    采购_采购_处理
+    切换到第四个窗口
+    采购_采购_修改供应商    ${suppName}
+    采购_采购_生成采购单
+    采购_采购_约定交期&采购备注    ${remark}
+    采购_采购_导出采购单
+    采购_采购_一键采购
+
+跟单接受客户订单
+    [Arguments]    ${inName}
+    采购_跟单_关键字    ${inName}
+    采购_跟单_查询
+    采购_跟单_接受采购
+
+仓库到货客户订单
+    [Arguments]    ${inName}    ${deliveryNo}
+    仓库_到货_关键字    ${inName}
+    仓库_到货_查询
+    仓库_到货_处理
+    切换到第二个窗口
+    仓库_到货_勾选零件
+    仓库_到货_提交    ${deliveryNo}
+
+质检处理客户订单
+    [Arguments]    ${inName}
+    采购_质检_关键字    ${inName}
+    采购_质检_查询
+    采购_质检_处理
+    切换到第六个窗口
+    采购_质检_批量合格
+    采购_质检_质检完成
+
+仓库发货客户订单
+    [Arguments]    ${inName}    ${expressNo}
+    仓库_发货_关键字    ${inName}
+    仓库_发货_查询
+    仓库_发货_处理
+    切换到第七个窗口
+    仓库_发货_填写发货信息    ${expressNo}
+    Comment    仓库_发货_结束发货
+
+转到确认收款
+    切换到财务
+    切换到确认收款
+
+确认收款
+    [Arguments]    ${inName}    ${serialNumber}
+    财务_确认收款_关键字    ${inName}
+    财务_确认收款_查询
+    财务_确认收款_处理
+    切换到第五个窗口
+    财务_确认收款_信息填写    ${serialNumber}
+    财务_确认收款_提交
+
+代下单转到确认开票
+    切换到财务
+    切换到确认开票
+
+代下单确认开票
+    [Arguments]    ${inName}    ${invoiceNumber}    ${invoiceAmount}
+    财务_确认开票_关键字    ${inName}
+    财务_确认开票_查询
+    财务_确认开票_处理
+    切换到第六个窗口
+    财务_确认开票_填写发票信息    ${invoiceNumber}    ${invoiceAmount}
+
+转到确认开票
+    切换到确认开票
+
+客户下单确认开票
+    [Arguments]    ${inName}    ${invoiceNumber}    ${invoiceAmount}
+    财务_确认开票_关键字    ${inName}
+    财务_确认开票_查询
+    财务_确认开票_处理
+    切换到第六个窗口
+    财务_确认开票_填写发票信息    ${invoiceNumber}    ${invoiceAmount}
+
+确认订单
+    [Arguments]    ${name}    ${comment}
+    进入客户工作台订单列表
+    搜索客户工作台订单    ${name}
+    订单确认    ${comment}
+
+申请售后
+    [Arguments]    ${name}
+    进入客户工作台订单列表
+    搜索客户工作台订单    ${name}
+    点击申请售后
+    填写申请售后信息
+    提交申请售后
+    关闭浏览器
+
+转到返修售前处理
+    切换到订单返修
+    切换到售前审核
+
+售前处理客户返修单
+    [Arguments]    ${inName}    ${LoseMoney}
+    订单返修_售前处理_关键字    ${inName}
+    订单返修_售前处理_查询
+    订单返修_售前处理_审核
+    切换到第二个窗口
+    订单返修_售前处理_数据 填写    ${LoseMoney}
+    订单返修_售前处理_提交
+
+转到返修售后处理
+    切换到售后处理
+
+售后处理客户返修单
+    [Arguments]    ${inName}
+    订单返修_售后处理_关键字    ${inName}
+    订单返修_售后处理_查询
+    订单返修_售后处理_处理
+    切换到第三个窗口
+    订单返修_售后处理_数据填写
+    订单返修_售后处理_提交
+    订单返修_售后处理_切换到待返修
+    订单返修_售后处理_关键字    ${inName}
+    订单返修_售后处理_查询
+    订单返修_售后处理_待返修_处理
+    切换到第四个窗口
+    订单返修_售后处理_待返修_提交
+
+转到退款售前申请
+    切换到订单退款
+    切换售前申请
+
+退款售前处理
+    [Arguments]    ${inName}
+    退款_售前_关键字    ${inName}
+    退款_售前_查询
+    退款_售前_申请
+    切换到第五个窗口
+    退款_售前_提交
+
+转到退款售前主管审核
+    切换到售前主管审核
+
+退款主管审核
+    [Arguments]    ${inName}
+    退款_售前主管_关键字    ${inName}
+    退款_售前主管_查询
+    退款_售前主管_审核
+    切换到第六个窗口
+    退款_售前主管_审核通过
+
+转到财务退款
+    切换到财务
+    切换到退款处理
+
+退款处理
+    [Arguments]    ${inName}    ${serialNumber}
+    财务_退款处理_关键字    ${inName}
+    财务_退款处理_查询
+    财务_退款处理_处理
+    切换到第七个窗口
+    财务_退款处理_信息填写    ${serialNumber}
+    财务_退款处理_提交
+
+售前删除订单
+    [Arguments]    ${inName}
+    切换到订单_售前_全部
+    订单_售前确认_关键字    ${inName}
+    订单_售前确认_查询
+    订单_售前确认_删除订单
+
+取消订单
+    [Arguments]    ${name}    ${comment}
+    进入客户工作台订单列表
+    搜索客户工作台订单    ${name}
+    订单取消    ${comment}
+
+转到订单取消售前审核
+    切换到订单取消
+    切换到订单取消售前审核
+
+售前审核客户取消
+    [Arguments]    ${inName}
+    订单取消_关键字    ${inName}
+    订单取消_查询
+    订单取消_售前审核_审核
+    切换到第二个窗口
+    订单取消_售前审核_提交
+
+转到订单取消采购处理
+    切换到订单取消采购处理
+
+采购处理客户取消
+    [Arguments]    ${inName}
+    订单取消_关键字    ${inName}
+    订单取消_查询
+    订单取消_采购处理_处理
+    切换到第三个窗口
+    订单取消_采购处理_扣款
+    订单取消_采购处理_提交
+
+登录供应商工作台
+    [Arguments]    ${url}    ${username}    ${password}
+    打开浏览器    ${url}
+    延迟    5
+    延迟    3
+    输入用户名_供应商平台    ${username}
+    输入密码_供应商平台    ${password}
+    点击登录_供应商平台
+
+供应商平台处理订单
+    [Arguments]    ${name}    ${expreeNo}
+    进入供应商工作台抢单列表
+    搜索供应商工作台询价单    ${name}
+    接受订单
+    进入供应商工作台订单列表
+    Comment    转到待交付列表
+    搜索供应商工作台询价单    ${name}
+    处理订单    ${expreeNo}
+
+供应商平台处理询价单
+    [Arguments]    ${name}    ${number}
+    进入供应商工作台询价列表
+    搜索供应商工作台询价单    ${name}
+    处理询价单    ${number}
+
+激光切割下单
+    点击激光切割自动报价
+    客户上传激光切割图纸    E:\\upload\\激光切割材料_2D-尺子.dxf    打开
+    选择切割面积
+    修改切割设置
+    上传激光切割合同并提交订单    E:\\upload\\【速加网合同】激光切割_2D-尺子.pdf    打开
+
+3D打印下单
+    Comment    点击3D打印
+    客户上传3D打印图纸    E:\\upload\\3D打印材料_胶体底板.STL    打开
+    选择3D打印材料并下单
+    上传3D打印合同并提交订单    E:\\upload\\【速加网合同】3D打印_胶体底板.pdf    打开
+
+转到跟单
+    切换到采购菜单
+    切换到跟单
